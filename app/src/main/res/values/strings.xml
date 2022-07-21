@@ -5,6 +5,7 @@
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="register_placeholder">Register here if you do not have an account</string>
+    <string name="error_user">Wrong username or password</string>
 <!--    Register activity-->
     <string name="register">Register</string>
     <string name="name">Name</string>
