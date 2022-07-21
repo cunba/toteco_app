@@ -5,6 +5,7 @@
     <string name="password">Contraseña</string>
     <string name="sign_in">Iniciar sesión</string>
     <string name="register_placeholder">Si no tienes cuenta registrate aquí</string>
+    <string name="error_user">Usuario o contraseña incorrectos</string>
 <!--    Register activity-->
     <string name="register">Registro</string>
     <string name="name">Name</string>

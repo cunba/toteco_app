@@ -54,7 +54,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:onClick="signIn"
             android:text="@string/sign_in" />
+
+        <TextView
+            android:id="@+id/main_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000" />
 
         <TextView
             android:id="@+id/main_tv2"
@@ -63,6 +70,7 @@
             android:layout_marginTop="20dp"
             android:clickable="true"
             android:defaultFocusHighlightEnabled="true"
+            android:onClick="onClickRegister"
             android:text="@string/register_placeholder"
             tools:ignore="TouchTargetSizeCheck" />
 

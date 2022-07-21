@@ -58,32 +58,32 @@ public class RegisterActivity extends AppCompatActivity {
             etPassword.requestFocus();
         } else {
             tvError.setText("");
+
+            // If there is not errors we create the user
+            User newUser = new User(
+                username,
+                name,
+                surname,
+                birthday,
+                password
+            );
+
+            // We insert the user into the local database and create a popup
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").build();
+            db.userDao().insert(newUser);
+            Toast.makeText(this, getString(R.string.user_create, username), Toast.LENGTH_SHORT).show();
+
+            // We clear all the texts
+            etUsername.setText("");
+            etName.setText("");
+            etSurname.setText("");
+            etBirthday.setText("");
+            etPassword.setText("");
+            etConfirmPassword.setText("");
+
+            // Move to main activity
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
-
-        // If there is not errors we create the user
-        User newUser = new User(
-            username,
-            name,
-            surname,
-            birthday,
-            password
-        );
-
-        // We insert the user into the local database and create a popup
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").build();
-        db.userDao().insert(newUser);
-        Toast.makeText(this, getString(R.string.user_create, username), Toast.LENGTH_SHORT).show();
-
-        // We clear all the texts
-        etUsername.setText("");
-        etName.setText("");
-        etSurname.setText("");
-        etBirthday.setText("");
-        etPassword.setText("");
-        etConfirmPassword.setText("");
-
-        // Move to main activity
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 }
