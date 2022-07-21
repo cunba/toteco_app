@@ -13,6 +13,9 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
+    @Query("SELECT * FROM user")
+    List<User> findAll();
+
     @Query("SELECT * FROM user WHERE username = :username AND password = :password")
     List<User> findByUsernameAndPassword(String username, String password);
 

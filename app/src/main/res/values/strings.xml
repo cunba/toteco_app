@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false" tools:ignore="MissingTranslation">toteco_app</string>
-<!--    Main activity   -->
+    <string name="app_name" translatable="false" tools:ignore="MissingTranslation">TOTECO APP</string>
+    <!--    Main activity   -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="register_placeholder">Register here if you do not have an account</string>
     <string name="error_user">Wrong username or password</string>
-<!--    Register activity-->
+    <!--    Register activity-->
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.svalero.toteco_app.dao.UserDao;
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.User;
 
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             tvError.setText(R.string.error_field_empty);
         } else {
             // Get the user
-            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "products").build();
-            List<User> user = db.userDao().findByUsernameAndPassword(username, password);
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+            List<User> user = db.userDao().findAll();
 
             // If the list is empty means that the user with this username and password doesn't exists
             if (user.size() == 0) {
