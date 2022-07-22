@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
             );
 
             // We insert the user into the local database and create a popup
-            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").build();
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
             db.userDao().insert(newUser);
             Toast.makeText(this, getString(R.string.user_create, username), Toast.LENGTH_SHORT).show();
 

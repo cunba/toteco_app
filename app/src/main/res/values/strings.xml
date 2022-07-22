@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false" tools:ignore="MissingTranslation">toteco_app</string>
-<!--    Main activity   -->
+    <string name="app_name" translatable="false" tools:ignore="MissingTranslation">TOTECO APP</string>
+    <!--    Main activity   -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="register_placeholder">Register here if you do not have an account</string>
     <string name="error_user">Wrong username or password</string>
-<!--    Register activity-->
+    <!--    Register activity   -->
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
@@ -15,4 +15,7 @@
     <string name="error_field_empty">Fields can not be empty</string>
     <string name="error_password">Both passwords must be the same</string>
     <string name="user_create">User with username %s created.</string>
+<!--    Publications activity   -->
+    <string name="card_price">PRICE: %f €</string>
+    <string name="card_punctuation">PUNCTUATION: %f / 5</string>
 </resources>
