@@ -13,6 +13,8 @@ import androidx.room.PrimaryKey;
 public class Publication {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo
+    private boolean inMenu;
     @ColumnInfo(name = "total_price")
     private float totalPrice;
     @ColumnInfo(name = "total_punctuation")
@@ -24,12 +26,21 @@ public class Publication {
     @ColumnInfo(name = "establishment_id")
     private int establishmentId;
 
-    public Publication(float totalPrice, float totalPunctuation, byte[] image, int userId, int establishmentId) {
+    public Publication(boolean inMenu, float totalPrice, float totalPunctuation, byte[] image, int userId, int establishmentId) {
+        this.inMenu = inMenu;
         this.totalPrice = totalPrice;
         this.totalPunctuation = totalPunctuation;
         this.image = image;
         this.userId = userId;
         this.establishmentId = establishmentId;
+    }
+
+    public boolean isInMenu() {
+        return inMenu;
+    }
+
+    public void setInMenu(boolean inMenu) {
+        this.inMenu = inMenu;
     }
 
     public int getUserId() {

@@ -25,7 +25,7 @@ public class PublicationsActivity extends AppCompatActivity {
     private List<Publication> publications;
     private List<PublicationToRecyclerView> publicationsToRecyclerView;
     private RecyclerView.Adapter adapter;
-    private AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +35,13 @@ public class PublicationsActivity extends AppCompatActivity {
         publications = new ArrayList<>();
         loadPublications();
         publicationsToRecyclerView = new ArrayList<>();
+        convertPublications();
         createRecyclerView();
     }
 
     private void loadPublications() {
         publications.clear();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         publications.addAll(db.publicationDao().findAll());
     }
 
