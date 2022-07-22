@@ -13,16 +13,16 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM users")
     List<User> findAll();
 
-    @Query("SELECT * FROM user WHERE username = :username AND password = :password")
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password")
     List<User> findByUsernameAndPassword(String username, String password);
 
     @Insert
     void insert(User user);
 
-    @Query("UPDATE user SET password = :password WHERE id = :id")
+    @Query("UPDATE users SET password = :password WHERE id = :id")
     void updatePassword(int id, String password);
 
     @Update

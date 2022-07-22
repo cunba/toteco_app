@@ -5,11 +5,11 @@
     <item
         android:id="@+id/menu_button"
         android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:title="Item"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:title="TODO" />
     <item
         android:id="@+id/add_publication_button"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="Item"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:title="TODO" />
 </menu>

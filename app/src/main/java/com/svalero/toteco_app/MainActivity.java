@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.svalero.toteco_app.dao.UserDao;
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.User;
 

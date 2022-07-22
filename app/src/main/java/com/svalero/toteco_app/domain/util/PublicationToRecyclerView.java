@@ -1,0 +1,71 @@
+package com.svalero.toteco_app.domain.util;
+
+import com.svalero.toteco_app.domain.Product;
+
+import java.util.List;
+
+public class PublicationToRecyclerView {
+    private int publicationId;
+    private String establishmentName;
+    private int image;
+    private List<Product> products;
+    private String totalPrice;
+    private String totalPunctuation;
+
+    public PublicationToRecyclerView(int publicationId, String establishmentName, int image, List<Product> products, String totalPrice, String totalPunctuation) {
+        this.publicationId = publicationId;
+        this.establishmentName = establishmentName;
+        this.image = image;
+        this.products = products;
+        this.totalPrice = totalPrice;
+        this.totalPunctuation = totalPunctuation;
+    }
+
+    public int getPublicationId() {
+        return publicationId;
+    }
+
+    public void setPublicationId(int publicationId) {
+        this.publicationId = publicationId;
+    }
+
+    public String getEstablishmentName() {
+        return establishmentName;
+    }
+
+    public void setEstablishmentName(String establishmentName) {
+        this.establishmentName = establishmentName;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getTotalPunctuation() {
+        return totalPunctuation;
+    }
+
+    public void setTotalPunctuation(String totalPunctuation) {
+        this.totalPunctuation = totalPunctuation;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+}

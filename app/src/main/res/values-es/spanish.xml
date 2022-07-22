@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    Main activity   -->
+    <!--    Main activity   -->
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="sign_in">Iniciar sesión</string>
     <string name="register_placeholder">Si no tienes cuenta registrate aquí</string>
     <string name="error_user">Usuario o contraseña incorrectos</string>
-<!--    Register activity-->
+    <!--    Register activity-->
     <string name="register">Registro</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
@@ -15,4 +15,7 @@
     <string name="error_field_empty">No puede haber campos vacíos</string>
     <string name="error_password">Las contraseñas deben ser iguales</string>
     <string name="user_create">Usuario con nombre %s creado con éxito.</string>
+    <!--    Publications activity   -->
+    <string name="card_price">PRECIO TOTAL: %f €</string>
+    <string name="card_punctuation">PUNTUACIÓN: %f / 5</string>
 </resources>
