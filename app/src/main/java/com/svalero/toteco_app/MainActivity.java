@@ -3,9 +3,11 @@ package com.svalero.toteco_app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         EditText etUsername = findViewById(R.id.main_username);
         EditText etPassword = findViewById(R.id.main_password);
         TextView tvError = findViewById(R.id.main_error);
+
+        // Remove focus from edit texts and hide the keyboard
+        etUsername.clearFocus();
+        etPassword.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etPassword.getWindowToken(), 0);
 
         // We convert the values into strings
         String username = etUsername.getText().toString();

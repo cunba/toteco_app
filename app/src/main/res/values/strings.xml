@@ -15,7 +15,7 @@
     <string name="error_field_empty">Fields can not be empty</string>
     <string name="error_password">Both passwords must be the same</string>
     <string name="user_create">User with username %s created.</string>
-<!--    Publications activity   -->
+    <!--    Publications activity   -->
     <string name="card_price">PRICE: %f €</string>
     <string name="card_punctuation">PUNCTUATION: %f / 5</string>
 </resources>
