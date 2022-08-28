@@ -15,7 +15,29 @@
     <string name="error_field_empty">Fields can not be empty</string>
     <string name="error_password">Both passwords must be the same</string>
     <string name="user_create">User with username %s created.</string>
+    <string name="error_username">User %s already exists</string>
     <!--    Publications activity   -->
     <string name="card_price">PRICE: %f €</string>
     <string name="card_punctuation">PUNCTUATION: %f / 5</string>
+    <!--    Add publication -->
+    <string name="add_publication_punctuation">Punctuation</string>
+    <string name="add_product">Add product</string>
+    <string name="add_publication">Add publication</string>
+    <string name="submit">Submit</string>
+    <!--    Add product     -->
+    <string name="add_product_name">Name</string>
+    <string name="add_product_price">Price</string>
+    <string name="add_product_punctuation">Punctuation</string>
+    <string name="add_product_error_price_punctuation">Price and punctuation must be 0 or more</string>
+    <string name="add_product_error_punctuation">The punctuation must be between 0 and 5</string>
+    <!--    Drawer  -->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="nav_publications">Publications</string>
+    <string name="nav_add_publication">Add publication</string>
+    <string name="nav_locations">Locations</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_logout">Sign out</string>
+    <string name="nav_header_title">%1s %2s</string>
+    <string name="nav_header_subtitle">%s</string>
 </resources>

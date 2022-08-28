@@ -40,7 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             tvCardTitle = (TextView) view.findViewById(R.id.card_title);
             ivCardImage = (ImageView) view.findViewById(R.id.card_image);
-            tvCardProducts = (TextView) view.findViewById(R.id.card_products);
+            tvCardProducts = (TextView) view.findViewById(R.id.card_products_list);
             tvCardPrice = (TextView) view.findViewById(R.id.card_price);
             tvCardPunctuation = (TextView) view.findViewById(R.id.card_punctuation);
         }

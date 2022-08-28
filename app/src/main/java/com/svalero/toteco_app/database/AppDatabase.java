@@ -12,7 +12,7 @@ import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.User;
 
-@Database(entities = {Establishment.class, Product.class, Publication.class, User.class}, version = 1)
+@Database(entities = {Establishment.class, Product.class, Publication.class, User.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract EstablishmentDao establishmentDao();
 

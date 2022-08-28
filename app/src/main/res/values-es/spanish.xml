@@ -15,7 +15,29 @@
     <string name="error_field_empty">No puede haber campos vacíos</string>
     <string name="error_password">Las contraseñas deben ser iguales</string>
     <string name="user_create">Usuario con nombre %s creado con éxito.</string>
+    <string name="error_username">El usuario %s ya existe</string>
     <!--    Publications activity   -->
     <string name="card_price">PRECIO TOTAL: %f €</string>
     <string name="card_punctuation">PUNTUACIÓN: %f / 5</string>
+    <!--    Add publication -->
+    <string name="add_publication_punctuation">Puntuación</string>
+    <string name="add_product">Añadir producto</string>
+    <string name="add_publication">Añadir publicación</string>
+    <string name="submit">Guardar</string>
+    <!--    Add product     -->
+    <string name="add_product_name">Nombre</string>
+    <string name="add_product_price">Precio</string>
+    <string name="add_product_punctuation">Puntuación</string>
+    <string name="add_product_error_price_punctuation">La puntuación y el precio deben ser 0 o más</string>
+    <string name="add_product_error_punctuation">La puntuación deben estar comprendida entre 0 y 5</string>
+    <!--    Drawer  -->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="nav_publications">Publicaciones</string>
+    <string name="nav_add_publication">Añadir publicación</string>
+    <string name="nav_locations">Localizaciones</string>
+    <string name="nav_settings">Ajustes</string>
+    <string name="nav_logout">Cerrar sesión</string>
+    <string name="nav_header_title">%1s %2s</string>
+    <string name="nav_header_subtitle">%s</string>
 </resources>

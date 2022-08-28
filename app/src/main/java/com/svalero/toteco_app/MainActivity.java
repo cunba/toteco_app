@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.svalero.toteco_app.database.AppDatabase;
+import com.svalero.toteco_app.domain.Establishment;
+import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.User;
 
 import java.util.List;
@@ -22,6 +24,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createAuxEstablishment();
+    }
+
+    private void createAuxEstablishment() {
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
+
+        List<Establishment> establishments = db.establishmentDao().findAll();
+        if (establishments.size() == 0) {
+            Establishment establishment = new Establishment("aux", 0, 0, true, 0);
+            db.establishmentDao().insert(establishment);
+        }
     }
 
     public void signIn(View view) {
@@ -46,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Get the user
             AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-            List<User> user = db.userDao().findAll();
+            List<User> user = db.userDao().findByUsernameAndPassword(username, password);
 
             // If the list is empty means that the user with this username and password doesn't exists
             if (user.size() == 0) {

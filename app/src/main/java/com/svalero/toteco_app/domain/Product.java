@@ -1,14 +1,18 @@
 package com.svalero.toteco_app.domain;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "products", foreignKeys = {
         @ForeignKey(entity = Publication.class, parentColumns = "id", childColumns = "publication_id", onDelete = ForeignKey.CASCADE)
-})
+    },
+    indices = {@Index(value = "publication_id", unique = false)}
+)
 public class Product {
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.relation.EstablishmentWithPublication;
+import com.svalero.toteco_app.domain.relation.PublicationWithProduct;
 import com.svalero.toteco_app.domain.relation.UserWithPublication;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public interface PublicationDao {
 
     @Query("SELECT * FROM publications")
     List<Publication> findAll();
+
+    @Query("SELECT * FROM publications WHERE id != 1")
+    List<Publication> findAllExceptAux();
+
+    @Query("SELECT * FROM publications ORDER BY id DESC LIMIT 1")
+    Publication findLast();
+
+    @Query("SELECT id FROM publications ORDER BY id DESC LIMIT 1")
+    int findLastId();
 
     @Insert
     void insert(Publication publication);
