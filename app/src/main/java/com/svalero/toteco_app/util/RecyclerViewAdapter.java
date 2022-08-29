@@ -99,17 +99,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         publications.get(position).getProducts().stream().forEach(p ->
                 products.set("" + products.get() + '\n' + p.toString() + '\n')
         );
-        System.out.println(products.get());
         viewHolder.getTvCardProducts().setText(products.get());
 
-        String totalPrice = publications.get(position).getTotalPrice();
-        String totalPriceToPrint = "TOTAL: " + totalPrice + " €";
-
-        String totalPunctuation = publications.get(position).getTotalPunctuation();
-        String totalPunctuationToPrint = "TOTAL: " + totalPunctuation + " / 5";
-
-        viewHolder.getTvCardPrice().setText(totalPriceToPrint);
-        viewHolder.getTvCardPunctuation().setText(totalPunctuationToPrint);
+        viewHolder.getTvCardPrice().setText(publications.get(position).getTotalPrice());
+        viewHolder.getTvCardPunctuation().setText(publications.get(position).getTotalPunctuation());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -7,14 +7,16 @@ import java.util.List;
 public class PublicationToRecyclerView {
     private int publicationId;
     private String establishmentName;
+    private String establishmentPunctuation;
     private int image;
     private List<Product> products;
     private String totalPrice;
     private String totalPunctuation;
 
-    public PublicationToRecyclerView(int publicationId, String establishmentName, int image, List<Product> products, String totalPrice, String totalPunctuation) {
+    public PublicationToRecyclerView(int publicationId, String establishmentName, String establishmentPunctuation, int image, List<Product> products, String totalPrice, String totalPunctuation) {
         this.publicationId = publicationId;
         this.establishmentName = establishmentName;
+        this.establishmentPunctuation = establishmentPunctuation;
         this.image = image;
         this.products = products;
         this.totalPrice = totalPrice;
@@ -67,5 +69,13 @@ public class PublicationToRecyclerView {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getEstablishmentPunctuation() {
+        return establishmentPunctuation;
+    }
+
+    public void setEstablishmentPunctuation(String establishmentPunctuation) {
+        this.establishmentPunctuation = establishmentPunctuation;
     }
 }

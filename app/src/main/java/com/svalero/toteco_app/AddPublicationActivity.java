@@ -86,7 +86,6 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     protected void onResume() {
         super.onResume();
 
-        loadEstablishments();
         refreshList();
         makeSummary();
     }
@@ -124,10 +123,10 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
         }
 
         TextView tvTotalPrice = findViewById(R.id.add_publication_total_price);
-        tvTotalPrice.setText(getString(R.string.card_price, totalPrice));
+        tvTotalPrice.setText(getString(R.string.add_publication_total_price, String.valueOf(totalPrice)));
 
         TextView tvTotalPunctuation = findViewById(R.id.add_publication_total_punctuation);
-        tvTotalPunctuation.setText(getString(R.string.card_punctuation, totalPunctuation));
+        tvTotalPunctuation.setText(getString(R.string.add_publication_total_punctuation, String.valueOf(totalPunctuation)));
     }
 
     public void onPressAddProduct(View view) {
@@ -145,6 +144,10 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     }
 
     private void loadEstablishments() {
+        db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
+
         try {
             List<Establishment> establishments = db.establishmentDao().findAllExceptAux();
             establishments.stream().forEach(p -> {
@@ -152,6 +155,7 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
                 map.addMarker(new MarkerOptions()
                         .position(latLng)
                         .title(p.getName()));
+                System.out.println(p.getName() + " - " + p.getLatitude() + ", " + p.getLongitude());
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -172,6 +176,8 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
             return;
         }
         googleMap.setMyLocationEnabled(true);
+        
+        loadEstablishments();
     }
 
 

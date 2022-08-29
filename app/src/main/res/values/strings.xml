@@ -21,9 +21,11 @@
     <string name="confirm_password">Confirm password</string>
     <string name="user_create">User with username %s created.</string>
     <!--    Publications activity   -->
-    <string name="card_price">TOTAL PRICE: %f €</string>
-    <string name="card_punctuation">TOTAL PUNCTUATION: %f / 5</string>
+    <string name="card_price">PRICE: %s €</string>
+    <string name="card_punctuation">PUNCTUATION: %s / 5</string>
     <!--    Add publication -->
+    <string name="add_publication_total_price">TOTAL PRICE: %s €</string>
+    <string name="add_publication_total_punctuation">TOTAL PUNCTUATION: %s / 5</string>
     <string name="add_publication_establishment_punctuation">Establishment punctuation</string>
     <string name="add_product">Add product</string>
     <string name="add_publication">Add publication</string>

@@ -130,10 +130,11 @@ public class PublicationsActivity extends AppCompatActivity {
             PublicationToRecyclerView publicationToRecyclerView = new PublicationToRecyclerView(
                     p.getId(),
                     establishment.getName(),
+                    String.valueOf(establishment.getPunctuation()),
                     1,
                     products,
-                    String.valueOf(p.getTotalPrice()),
-                    String.valueOf(p.getTotalPunctuation())
+                    getString(R.string.card_price, String.valueOf(p.getTotalPrice())),
+                    getString(R.string.card_punctuation, String.valueOf(p.getTotalPunctuation()))
             );
             publicationsToRecyclerView.add(publicationToRecyclerView);
         });

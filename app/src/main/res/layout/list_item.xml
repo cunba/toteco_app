@@ -26,6 +26,7 @@
                 android:id="@+id/card_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="TextView"
                 android:textSize="24sp" />
 
@@ -62,7 +63,7 @@
                     android:id="@+id/card_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="@string/card_price"
                     android:textSize="16sp" />
 
@@ -79,7 +80,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:text="@string/card_punctuation"
-                        android:textAlignment="textEnd"
+                        android:textAlignment="viewEnd"
                         android:textSize="16sp" />
 
                     <ImageView
