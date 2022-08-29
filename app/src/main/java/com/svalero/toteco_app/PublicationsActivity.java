@@ -136,6 +136,7 @@ public class PublicationsActivity extends AppCompatActivity {
                     getString(R.string.card_price, String.valueOf(p.getTotalPrice())),
                     getString(R.string.card_punctuation, String.valueOf(p.getTotalPunctuation()))
             );
+            System.out.println(p.getId());
             publicationsToRecyclerView.add(publicationToRecyclerView);
         });
     }

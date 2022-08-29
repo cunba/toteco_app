@@ -8,7 +8,9 @@ import androidx.room.Room;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -33,6 +35,7 @@ import com.svalero.toteco_app.util.ImageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AddPublicationActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
@@ -46,7 +49,7 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     double totalPrice = 0;
     double totalPunctuation = 0;
 
-    private final int SELECT_PICTURE_RESULT = 1;
+    private final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +157,8 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
                 LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
                 map.addMarker(new MarkerOptions()
                         .position(latLng)
+                        .snippet(getString(R.string.add_publication_establishment_punctuation_print, String.valueOf(p.getPunctuation())))
                         .title(p.getName()));
-                System.out.println(p.getName() + " - " + p.getLatitude() + ", " + p.getLongitude());
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -166,6 +169,7 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
         googleMap.setOnMapClickListener(this);
+        googleMap.setOnMarkerClickListener(this);
 
         // give the permissions to access to users device
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -181,19 +185,23 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     }
 
 
+
     @Override
-    public boolean onMarkerClick(@NonNull Marker marker) {
-        EditText etEstablishment = findViewById(R.id.add_publication_establishment_name);
+    public boolean onMarkerClick(Marker marker) {
+        EditText etEstablishmentName = findViewById(R.id.add_publication_establishment_name);
         db = Room.databaseBuilder(getApplicationContext(),
                         AppDatabase.class, "toteco").allowMainThreadQueries()
                 .fallbackToDestructiveMigration().build();
 
-        if (!marker.getTitle().equals("new establishment")) {
+        if (!Objects.equals(marker.getSnippet(), "new")) {
             // If the establishment does exists we print the name in the editor
-            etEstablishment.setText(marker.getTitle());
-            etEstablishment.setEnabled(false);
+            etEstablishmentName.setText(marker.getTitle());
+            etEstablishmentName.setEnabled(false);
             List<Establishment> establishment1 = db.establishmentDao().findByName(marker.getTitle());
             establishment = establishment1.get(0);
+        } else {
+            etEstablishmentName.setText("");
+            etEstablishmentName.setEnabled(true);
         }
 
         return false;
@@ -212,8 +220,10 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     }
 
     public void onPressAddImage(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, SELECT_PICTURE_RESULT);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
     public void onPressSubmit(View view) {
@@ -280,11 +290,10 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == SELECT_PICTURE_RESULT) && (resultCode == RESULT_OK)
-                && (data != null)) {
-            Picasso.get().load(data.getData()).noPlaceholder().centerCrop().fit()
-                    .into((ImageView) findViewById(R.id.add_publication_image));
-
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ((ImageView) findViewById(R.id.add_publication_image)).setImageBitmap(imageBitmap);
         }
     }
 }
