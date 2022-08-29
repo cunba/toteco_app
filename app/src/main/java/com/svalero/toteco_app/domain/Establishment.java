@@ -75,4 +75,15 @@ public class Establishment {
     public void setPunctuation(float punctuation) {
         this.punctuation = punctuation;
     }
+
+    @Override
+    public String toString() {
+        return "Establishment{" +
+                "name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", open=" + open +
+                ", punctuation=" + punctuation +
+                '}';
+    }
 }

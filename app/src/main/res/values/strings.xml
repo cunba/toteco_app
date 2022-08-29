@@ -8,6 +8,7 @@
     <string name="error_password">Both passwords must be the same</string>
     <string name="error_username">User %s already exists</string>
     <string name="error_products_empty">There are no added products</string>
+    <string name="error_establishment_empty">You must add an establishment</string>
     <!--    Main activity   -->
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -26,20 +27,24 @@
     <!--    Add publication -->
     <string name="add_publication_total_price">TOTAL PRICE: %s €</string>
     <string name="add_publication_total_punctuation">TOTAL PUNCTUATION: %s / 5 ★</string>
-    <string name="add_publication_establishment_punctuation">Establishment punctuation</string>
     <string name="add_publication_establishment_punctuation_print">%s / 5 ★</string>
     <string name="add_product">Add product</string>
     <string name="add_publication">Add publication</string>
     <string name="submit">Submit</string>
-    <string name="add_publication_establishment_name">Establishment name</string>
     <string name="publication_created">Publication created</string>
     <string name="add_publication_add_image">Add image</string>
+    <string name="add_publication_establishment_add">Select establishment</string>
+    <string name="add_publication_establishment_punctuation">Establishment punctuation</string>
     <!--    Add product     -->
     <string name="add_product_name">Name</string>
     <string name="add_product_price">Price</string>
     <string name="add_product_punctuation">Punctuation</string>
     <string name="add_product_error_price_punctuation">Price and punctuation must be 0 or more</string>
     <string name="add_product_error_punctuation">The punctuation must be between 0 and 5</string>
+    <!--    Add establishment  -->
+    <string name="add_establishment">Add establishment</string>
+    <string name="add_establishment_name">Name</string>
+    <string name="add_establishment_punctuation">Punctuation</string>
     <!--    Drawer  -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>

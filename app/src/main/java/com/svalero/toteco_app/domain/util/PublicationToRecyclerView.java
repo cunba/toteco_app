@@ -1,5 +1,7 @@
 package com.svalero.toteco_app.domain.util;
 
+import android.graphics.Bitmap;
+
 import com.svalero.toteco_app.domain.Product;
 
 import java.util.List;
@@ -8,12 +10,12 @@ public class PublicationToRecyclerView {
     private int publicationId;
     private String establishmentName;
     private String establishmentPunctuation;
-    private int image;
+    private byte[] image;
     private List<Product> products;
     private String totalPrice;
     private String totalPunctuation;
 
-    public PublicationToRecyclerView(int publicationId, String establishmentName, String establishmentPunctuation, int image, List<Product> products, String totalPrice, String totalPunctuation) {
+    public PublicationToRecyclerView(int publicationId, String establishmentName, String establishmentPunctuation, byte[] image, List<Product> products, String totalPrice, String totalPunctuation) {
         this.publicationId = publicationId;
         this.establishmentName = establishmentName;
         this.establishmentPunctuation = establishmentPunctuation;
@@ -63,11 +65,11 @@ public class PublicationToRecyclerView {
         this.totalPunctuation = totalPunctuation;
     }
 
-    public int getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

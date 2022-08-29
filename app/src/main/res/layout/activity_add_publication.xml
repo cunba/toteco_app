@@ -3,136 +3,130 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".AddPublicationActivity">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/add_publication_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-112dp">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/add_publication_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/add_publication"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/add_publication_establishment_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minHeight="48dp"
+            android:onClick="onPressAddEstablishment"
+            android:text="@string/add_publication_establishment_add"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/add_publication_establishment_punctuation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_publication_establishment_punctuation"
+            android:textSize="18sp" />
+
+        <ListView
+            android:id="@+id/add_publication_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fastScrollEnabled="true"
+            android:isScrollContainer="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="70dp"
-            android:orientation="vertical">
+            android:layout_height="100dp"
+            android:minHeight="50dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/add_publication_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="@string/add_publication"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="34sp" />
-
-            <EditText
-                android:id="@+id/add_publication_establishment_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/add_publication_establishment_name"
-                android:inputType="textPersonName"
-                android:minHeight="48dp" />
-
-            <EditText
-                android:id="@+id/add_publication_establishment_punctuation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/add_publication_establishment_punctuation"
-                android:inputType="textPersonName"
-                android:minHeight="48dp" />
-
-            <fragment
-                android:id="@+id/add_publication_map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_marginTop="10dp"
-                tools:context=".AddPublicationActivity" />
-
-            <ListView
-                android:id="@+id/add_publication_product_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="20dp"
+            <ImageButton
+                android:id="@+id/add_publication_image"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
-                android:fastScrollEnabled="true"
-                android:isScrollContainer="true" />
+                android:contentDescription="@string/add_publication"
+                android:onClick="onPressAddImage"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:minHeight="50dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                android:textAlignment="center">
 
-                <ImageButton
-                    android:id="@+id/add_publication_image"
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/add_publication"
-                    android:onClick="onPressAddImage"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/add_publication_total_punctuation"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:baselineAligned="false"
-                    android:orientation="vertical"
-                    android:textAlignment="center">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/card_punctuation"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/add_publication_total_punctuation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/card_punctuation"
-                        android:textAlignment="viewStart"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/add_publication_total_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/card_price"
-                        android:textAlignment="textStart"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/add_publication_total_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/card_price"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_publication_error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="#FF0000" />
-
-            <Button
-                android:id="@+id/add_product_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onPressAddProduct"
-                android:text="@string/add_product" />
-
-            <Button
-                android:id="@+id/add_publication_button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onPressSubmit"
-                android:text="@string/submit"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-
         </LinearLayout>
-    </ScrollView>
+
+        <TextView
+            android:id="@+id/add_publication_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#FF0000" />
+
+        <Button
+            android:id="@+id/add_product_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onPressAddProduct"
+            android:text="@string/add_product" />
+
+        <Button
+            android:id="@+id/add_publication_button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onPressSubmit"
+            android:text="@string/submit"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

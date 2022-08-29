@@ -6,6 +6,7 @@
     <string name="error_username">El usuario %s ya existe</string>
     <string name="error_user">Usuario o contraseña incorrectos</string>
     <string name="error_products_empty">No hay productos añadidos</string>
+    <string name="error_establishment_empty">Debes añadir un establecimiento</string>
     <!--    Main activity   -->
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
@@ -24,20 +25,24 @@
     <!--    Add publication -->
     <string name="add_publication_total_price">PRECIO TOTAL: %s €</string>
     <string name="add_publication_total_punctuation">PUNTUACIÓN TOTAL: %s / 5 ★</string>
-    <string name="add_publication_establishment_punctuation">Puntuación del lugar</string>
     <string name="add_publication_establishment_punctuation_print">%s / 5 ★</string>
     <string name="add_product">Añadir producto</string>
     <string name="add_publication">Añadir publicación</string>
     <string name="submit">Guardar</string>
-    <string name="add_publication_establishment_name">Nombre del establecimiento</string>
     <string name="publication_created">Publicación creada</string>
     <string name="add_publication_add_image">Añadir imagen</string>
+    <string name="add_publication_establishment_add">Selecciona establecimiento</string>
+    <string name="add_publication_establishment_punctuation">Puntuación del lugar</string>
     <!--    Add product     -->
     <string name="add_product_name">Nombre</string>
     <string name="add_product_price">Precio</string>
     <string name="add_product_punctuation">Puntuación</string>
     <string name="add_product_error_price_punctuation">La puntuación y el precio deben ser 0 o más</string>
     <string name="add_product_error_punctuation">La puntuación deben estar comprendida entre 0 y 5</string>
+    <!--    Add establishment  -->
+    <string name="add_establishment">Añadir establecimiento</string>
+    <string name="add_establishment_name">Nombre</string>
+    <string name="add_establishment_punctuation">Puntuación</string>
     <!--    Drawer  -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>

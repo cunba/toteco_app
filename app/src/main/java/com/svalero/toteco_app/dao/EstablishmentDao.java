@@ -39,4 +39,7 @@ public interface EstablishmentDao {
 
     @Query(value = "SELECT SUM(total_punctuation) FROM publications WHERE establishment_id = :id")
     float sumPunctuation(int id);
+
+    @Query(value = "SELECT COUNT(id) FROM publications WHERE establishment_id = :id")
+    int countPublicationsByEstablishmentId(int id);
 }

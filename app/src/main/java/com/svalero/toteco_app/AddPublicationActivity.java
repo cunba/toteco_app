@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
@@ -37,34 +38,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AddPublicationActivity extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
+public class AddPublicationActivity extends AppCompatActivity {
 
     public List<Product> products;
     private ArrayAdapter<Product> productsAdapter;
     private AppDatabase db;
-    private GoogleMap map;
 
     private Establishment establishment;
     double totalPrice = 0;
     double totalPunctuation = 0;
 
-    private final int REQUEST_IMAGE_CAPTURE = 1;
+    private final int SELECT_PICTURE_RESULT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_publication);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.add_publication_map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
-
         products = new ArrayList<>();
         ListView lvProducts = findViewById(R.id.add_publication_product_list);
         productsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, products);
         lvProducts.setAdapter(productsAdapter);
+    }
+
+    private void setEstablishment() {
+        TextView tvEstablishmentName = findViewById(R.id.add_publication_establishment_name);
+        TextView tvEstablishmentPunctuation = findViewById(R.id.add_publication_establishment_punctuation);
+
+        establishment = db.establishmentDao().findById(1);
+        if (establishment.getName().equals("")) {
+            tvEstablishmentName.setText(R.string.add_publication_establishment_add);
+            tvEstablishmentPunctuation.setText(R.string.add_publication_establishment_punctuation);
+        } else {
+            tvEstablishmentName.setText(establishment.getName());
+            double price = Math.round(establishment.getPunctuation() * 100) / 100;
+            String sPrice = String.valueOf(price);
+            tvEstablishmentPunctuation.setText(getString(R.string.add_publication_establishment_punctuation_print, sPrice));
+        }
+
     }
 
     @Override
@@ -89,6 +100,7 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     protected void onResume() {
         super.onResume();
 
+        setEstablishment();
         refreshList();
         makeSummary();
     }
@@ -117,12 +129,14 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
                 .map(Product::getPrice)
                 .mapToDouble(price -> price)
                 .sum();
+        totalPrice = Math.round(totalPrice*100.0)/100.0;
 
         if (products.size() != 0) {
             totalPunctuation = products.stream()
                     .map(Product::getPunctuation)
                     .mapToDouble(punctuation -> punctuation)
                     .sum() / products.size();
+            totalPunctuation = Math.round(totalPunctuation*100.0)/100.0;
         }
 
         TextView tvTotalPrice = findViewById(R.id.add_publication_total_price);
@@ -137,93 +151,15 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
         startActivity(intent);
     }
 
-    @Override
-    public void onMapClick(@NonNull LatLng latLng) {
-        map.addMarker(new MarkerOptions()
-                .position(latLng)
-                .snippet("new")
-                .title("new establishment"));
-        addEstablishment(latLng);
-    }
-
-    private void loadEstablishments() {
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "toteco").allowMainThreadQueries()
-                .fallbackToDestructiveMigration().build();
-
-        try {
-            List<Establishment> establishments = db.establishmentDao().findAllExceptAux();
-            establishments.stream().forEach(p -> {
-                LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
-                map.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .snippet(getString(R.string.add_publication_establishment_punctuation_print, String.valueOf(p.getPunctuation())))
-                        .title(p.getName()));
-            });
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        map = googleMap;
-        googleMap.setOnMapClickListener(this);
-        googleMap.setOnMarkerClickListener(this);
-
-        // give the permissions to access to users device
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        googleMap.setMyLocationEnabled(true);
-        
-        loadEstablishments();
-    }
-
-
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        EditText etEstablishmentName = findViewById(R.id.add_publication_establishment_name);
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "toteco").allowMainThreadQueries()
-                .fallbackToDestructiveMigration().build();
-
-        if (!Objects.equals(marker.getSnippet(), "new")) {
-            // If the establishment does exists we print the name in the editor
-            etEstablishmentName.setText(marker.getTitle());
-            etEstablishmentName.setEnabled(false);
-            List<Establishment> establishment1 = db.establishmentDao().findByName(marker.getTitle());
-            establishment = establishment1.get(0);
-        } else {
-            etEstablishmentName.setText("");
-            etEstablishmentName.setEnabled(true);
-        }
-
-        return false;
-    }
-
-    private void addEstablishment(LatLng latLng) {
-        EditText etEstablishment = findViewById(R.id.add_publication_establishment_name);
-        etEstablishment.setEnabled(true);
-        String establishmentName = etEstablishment.getText().toString();
-        establishment = new Establishment(
-                establishmentName,
-                latLng.latitude,
-                latLng.longitude,
-                true,
-                0);
+    public void onPressAddEstablishment(View view) {
+        Intent intent = new Intent(this, AddEstablishmentActivity.class);
+//        intent.putExtra("establishment", (Parcelable) establishment);
+        startActivity(intent);
     }
 
     public void onPressAddImage(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SELECT_PICTURE_RESULT);
     }
 
     public void onPressSubmit(View view) {
@@ -231,21 +167,21 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
                         AppDatabase.class, "toteco").allowMainThreadQueries()
                 .fallbackToDestructiveMigration().build();
 
-        EditText etEstablishmentName = findViewById(R.id.add_publication_establishment_name);
-        EditText etEstablishmentPunctuation = findViewById(R.id.add_publication_establishment_punctuation);
+        TextView tvEstablishmentName = findViewById(R.id.add_publication_establishment_name);
+        TextView tvEstablishmentPunctuation = findViewById(R.id.add_publication_establishment_punctuation);
         TextView tvError = findViewById(R.id.add_publication_error);
         ImageView productImageView = findViewById(R.id.add_publication_image);
 
-        String sEstablishmentPunctuation = etEstablishmentPunctuation.getText().toString();
-        String establishmentName = etEstablishmentName.getText().toString();
+        String establishmentName = tvEstablishmentName.toString();
+        String establishmentPunctuationString = tvEstablishmentPunctuation.toString();
 
-        if (sEstablishmentPunctuation.equals("") || establishmentName.equals("")) {
-            tvError.setText(R.string.error_field_empty);
+        if (establishmentName.equals("") || establishmentPunctuationString.equals("")) {
+            tvError.setText(R.string.error_establishment_empty);
         } else if (products.size() == 0) {
             tvError.setText(R.string.error_products_empty);
         } else {
             tvError.setText("");
-            float establishmentPunctuation = Float.parseFloat(sEstablishmentPunctuation);
+            float establishmentPunctuation = Float.parseFloat(establishmentPunctuationString);
             byte[] publicationImage = ImageAdapter.fromImageViewToByteArray(productImageView);
 
             // if the establishment doesnt exists we create it
@@ -263,6 +199,8 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
                     1,
                     establishment.getId());
 
+            publication.setImage(publicationImage);
+
             db.publicationDao().insert(publication);
             Publication addedPublication = db.publicationDao().findLast();
 
@@ -274,8 +212,8 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
 
             Toast.makeText(this, R.string.publication_created, Toast.LENGTH_SHORT).show();
 
-            etEstablishmentName.setText("");
-            etEstablishmentPunctuation.setText("");
+            tvEstablishmentName.setText("");
+            tvEstablishmentPunctuation.setText("");
             tvError.setText("");
             products.clear();
             establishment = null;
@@ -290,10 +228,11 @@ public class AddPublicationActivity extends AppCompatActivity implements OnMapRe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView) findViewById(R.id.add_publication_image)).setImageBitmap(imageBitmap);
+        if ((requestCode == SELECT_PICTURE_RESULT) && (resultCode == RESULT_OK)
+                && (data != null)) {
+            Picasso.get().load(data.getData()).noPlaceholder().centerCrop().fit()
+                    .into((ImageView) findViewById(R.id.add_publication_image));
+
         }
     }
 }

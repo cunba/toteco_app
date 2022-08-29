@@ -1,6 +1,8 @@
 package com.svalero.toteco_app.util;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +95,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // contents of the view with that element
 
         viewHolder.getTvCardTitle().setText(publications.get(position).getEstablishmentName());
-//        viewHolder.getIvCardImage().setImageResource(publications.get(position).getImage());
+
+        Bitmap image = BitmapFactory.decodeByteArray(publications.get(position).getImage(), 0,
+                publications.get(position).getImage().length);
+        viewHolder.getIvCardImage().setImageBitmap(image);
 
         AtomicReference<String> products = new AtomicReference<>("");
         publications.get(position).getProducts().stream().forEach(p ->

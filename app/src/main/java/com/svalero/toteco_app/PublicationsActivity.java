@@ -127,16 +127,17 @@ public class PublicationsActivity extends AppCompatActivity {
         publications.stream().forEach((p) -> {
             Establishment establishment = db.publicationDao().findEstablishmentByPublicationId(p.getEstablishmentId()).getEstablishment();
             List<Product> products = db.productDao().findByPublicationId(p.getId());
+            double totalPrice = Math.round(p.getTotalPrice()*100.0)/100.0;
+            double totalPunctuation = Math.round(p.getTotalPunctuation()*100.0)/100.0;
             PublicationToRecyclerView publicationToRecyclerView = new PublicationToRecyclerView(
                     p.getId(),
                     establishment.getName(),
                     String.valueOf(establishment.getPunctuation()),
-                    1,
+                    p.getImage(),
                     products,
-                    getString(R.string.card_price, String.valueOf(p.getTotalPrice())),
-                    getString(R.string.card_punctuation, String.valueOf(p.getTotalPunctuation()))
+                    getString(R.string.card_price, String.valueOf(totalPrice)),
+                    getString(R.string.card_punctuation, String.valueOf(totalPunctuation))
             );
-            System.out.println(p.getId());
             publicationsToRecyclerView.add(publicationToRecyclerView);
         });
     }
