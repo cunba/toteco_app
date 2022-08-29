@@ -75,6 +75,6 @@ public class Product {
     @NonNull
     @Override
     public String toString() {
-        return "- " + name + "\n   (" + price + "€, " + punctuation + "/5)";
+        return "- " + name + "\n(" + price + "€, " + punctuation + "/5)";
     }
 }

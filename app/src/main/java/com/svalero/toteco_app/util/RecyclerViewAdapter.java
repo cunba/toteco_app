@@ -4,20 +4,17 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.svalero.toteco_app.R;
-import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.util.PublicationToRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -98,12 +95,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.getTvCardTitle().setText(publications.get(position).getEstablishmentName());
 //        viewHolder.getIvCardImage().setImageResource(publications.get(position).getImage());
 
-        String products = "";
+        AtomicReference<String> products = new AtomicReference<>("");
         publications.get(position).getProducts().stream().forEach(p ->
-            products.concat('\n' + p.toString() + '\n')
+                products.set("" + products.get() + '\n' + p.toString() + '\n')
         );
-        System.out.println(products);
-        viewHolder.getTvCardProducts().setText(products);
+        System.out.println(products.get());
+        viewHolder.getTvCardProducts().setText(products.get());
 
         String totalPrice = publications.get(position).getTotalPrice();
         String totalPriceToPrint = "TOTAL: " + totalPrice + " €";
