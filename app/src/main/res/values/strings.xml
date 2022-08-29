@@ -1,29 +1,36 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false" tools:ignore="MissingTranslation">TOTECO APP</string>
+    <string name="maps_key" translatable="false" tools:ignore="MissingTranslation">AIzaSyAkZTtsLnT0yNfooyTmRCAbMwcc60aBzOM</string>
+
+    <!--    Errors  -->
+    <string name="error_user">Wrong username or password</string>
+    <string name="error_field_empty">Fields can not be empty</string>
+    <string name="error_password">Both passwords must be the same</string>
+    <string name="error_username">User %s already exists</string>
+    <string name="error_products_empty">There are no added products</string>
     <!--    Main activity   -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="register_placeholder">Register here if you do not have an account</string>
-    <string name="error_user">Wrong username or password</string>
     <!--    Register activity   -->
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="birthday">Birthday</string>
     <string name="confirm_password">Confirm password</string>
-    <string name="error_field_empty">Fields can not be empty</string>
-    <string name="error_password">Both passwords must be the same</string>
     <string name="user_create">User with username %s created.</string>
-    <string name="error_username">User %s already exists</string>
     <!--    Publications activity   -->
-    <string name="card_price">PRICE: %f €</string>
-    <string name="card_punctuation">PUNCTUATION: %f / 5</string>
+    <string name="card_price">TOTAL PRICE: %f €</string>
+    <string name="card_punctuation">TOTAL PUNCTUATION: %f / 5</string>
     <!--    Add publication -->
-    <string name="add_publication_punctuation">Punctuation</string>
+    <string name="add_publication_establishment_punctuation">Establishment punctuation</string>
     <string name="add_product">Add product</string>
     <string name="add_publication">Add publication</string>
     <string name="submit">Submit</string>
+    <string name="add_publication_establishment_name">Establishment name</string>
+    <string name="publication_created">Publication created</string>
+    <string name="add_publication_add_image">Add image</string>
     <!--    Add product     -->
     <string name="add_product_name">Name</string>
     <string name="add_product_price">Price</string>

@@ -125,7 +125,7 @@ public class PublicationsActivity extends AppCompatActivity {
         publicationsToRecyclerView.clear();
 
         publications.stream().forEach((p) -> {
-            Establishment establishment = db.publicationDao().findEstablishmentById(p.getEstablishmentId()).getEstablishment();
+            Establishment establishment = db.publicationDao().findEstablishmentByPublicationId(p.getEstablishmentId()).getEstablishment();
             List<Product> products = db.productDao().findByPublicationId(p.getId());
             PublicationToRecyclerView publicationToRecyclerView = new PublicationToRecyclerView(
                     p.getId(),

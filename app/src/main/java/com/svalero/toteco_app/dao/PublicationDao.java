@@ -9,7 +9,6 @@ import androidx.room.Update;
 
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.relation.EstablishmentWithPublication;
-import com.svalero.toteco_app.domain.relation.PublicationWithProduct;
 import com.svalero.toteco_app.domain.relation.UserWithPublication;
 
 import java.util.List;
@@ -42,12 +41,12 @@ public interface PublicationDao {
     void delete(Publication publication);
 
     @Transaction
-    @Query("SELECT * FROM establishments WHERE id = :establishmentId")
-    EstablishmentWithPublication findEstablishmentById(int establishmentId);
+    @Query("SELECT * FROM establishments WHERE id = (SELECT establishment_id FROM publications WHERE id = :id)")
+    EstablishmentWithPublication findEstablishmentByPublicationId(int id);
 
     @Transaction
-    @Query("SELECT * FROM users WHERE id = :userId")
-    UserWithPublication findUserById(int userId);
+    @Query("SELECT * FROM users WHERE id = (SELECT user_id FROM publications WHERE id = :id)")
+    UserWithPublication findUserByPublicationId(int id);
 
     @Query("SELECT SUM(price) AS suma FROM products WHERE publication_id = :id")
     float totalPrice(int id);

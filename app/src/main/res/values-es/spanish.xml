@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Errors  -->
+    <string name="error_field_empty">No puede haber campos vacíos</string>
+    <string name="error_password">Las contraseñas deben ser iguales</string>
+    <string name="error_username">El usuario %s ya existe</string>
+    <string name="error_user">Usuario o contraseña incorrectos</string>
+    <string name="error_products_empty">No hay productos añadidos</string>
     <!--    Main activity   -->
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="sign_in">Iniciar sesión</string>
     <string name="register_placeholder">Si no tienes cuenta registrate aquí</string>
-    <string name="error_user">Usuario o contraseña incorrectos</string>
     <!--    Register activity-->
     <string name="register">Registro</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="birthday">Birthday</string>
     <string name="confirm_password">Confirm password</string>
-    <string name="error_field_empty">No puede haber campos vacíos</string>
-    <string name="error_password">Las contraseñas deben ser iguales</string>
     <string name="user_create">Usuario con nombre %s creado con éxito.</string>
-    <string name="error_username">El usuario %s ya existe</string>
     <!--    Publications activity   -->
     <string name="card_price">PRECIO TOTAL: %f €</string>
-    <string name="card_punctuation">PUNTUACIÓN: %f / 5</string>
+    <string name="card_punctuation">PUNTUACIÓN TOTAL: %f / 5</string>
     <!--    Add publication -->
-    <string name="add_publication_punctuation">Puntuación</string>
+    <string name="add_publication_establishment_punctuation">Puntuación del lugar</string>
     <string name="add_product">Añadir producto</string>
     <string name="add_publication">Añadir publicación</string>
     <string name="submit">Guardar</string>
+    <string name="add_publication_establishment_name">Nombre del establecimiento</string>
+    <string name="publication_created">Publicación creada</string>
+    <string name="add_publication_add_image">Añadir imagen</string>cunba
     <!--    Add product     -->
     <string name="add_product_name">Nombre</string>
     <string name="add_product_price">Precio</string>

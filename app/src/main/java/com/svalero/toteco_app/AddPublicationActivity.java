@@ -1,35 +1,62 @@
 package com.svalero.toteco_app;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcherOwner;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.room.Room;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 import com.svalero.toteco_app.database.AppDatabase;
+import com.svalero.toteco_app.domain.Establishment;
 import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
+import com.svalero.toteco_app.util.ImageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPublicationActivity extends AppCompatActivity {
+public class AddPublicationActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
     public List<Product> products;
     private ArrayAdapter<Product> productsAdapter;
     private AppDatabase db;
+    private GoogleMap map;
+
+    private Establishment establishment;
+    double totalPrice = 0;
+    double totalPunctuation = 0;
+
+    private final int SELECT_PICTURE_RESULT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_publication);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.add_publication_map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
 
         products = new ArrayList<>();
         ListView lvProducts = findViewById(R.id.add_publication_product_list);
@@ -41,8 +68,10 @@ public class AddPublicationActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+         db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
         //Delete unsaved products
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         try {
             db.productDao().deleteByPublicationId(1);
         } catch (Exception e) {
@@ -57,6 +86,7 @@ public class AddPublicationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        loadEstablishments();
         refreshList();
         makeSummary();
     }
@@ -67,32 +97,188 @@ public class AddPublicationActivity extends AppCompatActivity {
     }
 
     private void loadProducts() {
-        products.clear();
         db = Room.databaseBuilder(getApplicationContext(),
                         AppDatabase.class, "toteco").allowMainThreadQueries()
                 .fallbackToDestructiveMigration().build();
-        products.addAll(db.productDao().findByPublicationId(1));
+
+        products.clear();
+
+        try {
+            products.addAll(db.productDao().findByPublicationId(1));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void makeSummary() {
-        double totalPrice = products.stream()
+        totalPrice = products.stream()
                 .map(Product::getPrice)
                 .mapToDouble(price -> price)
                 .sum();
 
+        if (products.size() != 0) {
+            totalPunctuation = products.stream()
+                    .map(Product::getPunctuation)
+                    .mapToDouble(punctuation -> punctuation)
+                    .sum() / products.size();
+        }
+
         TextView tvTotalPrice = findViewById(R.id.add_publication_total_price);
         tvTotalPrice.setText(getString(R.string.card_price, totalPrice));
-    }
 
-    @Override
-    // Creates the action bar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar, menu);
-        return true;
+        TextView tvTotalPunctuation = findViewById(R.id.add_publication_total_punctuation);
+        tvTotalPunctuation.setText(getString(R.string.card_punctuation, totalPunctuation));
     }
 
     public void onPressAddProduct(View view) {
         Intent intent = new Intent(this, AddProductActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onMapClick(@NonNull LatLng latLng) {
+        map.addMarker(new MarkerOptions()
+                .position(latLng)
+                .snippet("new")
+                .title("new establishment"));
+        addEstablishment(latLng);
+    }
+
+    private void loadEstablishments() {
+        try {
+            List<Establishment> establishments = db.establishmentDao().findAllExceptAux();
+            establishments.stream().forEach(p -> {
+                LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+                map.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(p.getName()));
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        map = googleMap;
+        googleMap.setOnMapClickListener(this);
+
+        // give the permissions to access to users device
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+    }
+
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        EditText etEstablishment = findViewById(R.id.add_publication_establishment_name);
+        db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
+
+        if (!marker.getTitle().equals("new establishment")) {
+            // If the establishment does exists we print the name in the editor
+            etEstablishment.setText(marker.getTitle());
+            etEstablishment.setEnabled(false);
+            List<Establishment> establishment1 = db.establishmentDao().findByName(marker.getTitle());
+            establishment = establishment1.get(0);
+        }
+
+        return false;
+    }
+
+    private void addEstablishment(LatLng latLng) {
+        EditText etEstablishment = findViewById(R.id.add_publication_establishment_name);
+        etEstablishment.setEnabled(true);
+        String establishmentName = etEstablishment.getText().toString();
+        establishment = new Establishment(
+                establishmentName,
+                latLng.latitude,
+                latLng.longitude,
+                true,
+                0);
+    }
+
+    public void onPressAddImage(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SELECT_PICTURE_RESULT);
+    }
+
+    public void onPressSubmit(View view) {
+        db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
+
+        EditText etEstablishmentName = findViewById(R.id.add_publication_establishment_name);
+        EditText etEstablishmentPunctuation = findViewById(R.id.add_publication_establishment_punctuation);
+        TextView tvError = findViewById(R.id.add_publication_error);
+        ImageView productImageView = findViewById(R.id.add_publication_image);
+
+        String sEstablishmentPunctuation = etEstablishmentPunctuation.getText().toString();
+        String establishmentName = etEstablishmentName.getText().toString();
+
+        if (sEstablishmentPunctuation.equals("") || establishmentName.equals("")) {
+            tvError.setText(R.string.error_field_empty);
+        } else if (products.size() == 0) {
+            tvError.setText(R.string.error_products_empty);
+        } else {
+            tvError.setText("");
+            float establishmentPunctuation = Float.parseFloat(sEstablishmentPunctuation);
+            byte[] publicationImage = ImageAdapter.fromImageViewToByteArray(productImageView);
+
+            // if the establishment doesnt exists we create it
+            if (establishment.getId() == 0) {
+                establishment.setName(establishmentName);
+                establishment.setPunctuation(establishmentPunctuation);
+                db.establishmentDao().insert(establishment);
+                establishment = db.establishmentDao().findLast();
+                System.out.println(establishment.getName());
+            }
+
+            Publication publication = new Publication(
+                    Float.parseFloat(String.valueOf(totalPrice)),
+                    Float.parseFloat(String.valueOf(totalPunctuation)),
+                    1,
+                    establishment.getId());
+
+            db.publicationDao().insert(publication);
+            Publication addedPublication = db.publicationDao().findLast();
+
+            products.stream().forEach(p -> {
+                p.setPublicationId(addedPublication.getId());
+                db.productDao().update(p);
+                System.out.println(p.getName());
+            });
+
+            Toast.makeText(this, R.string.publication_created, Toast.LENGTH_SHORT).show();
+
+            etEstablishmentName.setText("");
+            etEstablishmentPunctuation.setText("");
+            tvError.setText("");
+            products.clear();
+            establishment = null;
+            totalPrice = 0;
+            totalPunctuation = 0;
+
+            Intent intent = new Intent(this, PublicationsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == SELECT_PICTURE_RESULT) && (resultCode == RESULT_OK)
+                && (data != null)) {
+            Picasso.get().load(data.getData()).noPlaceholder().centerCrop().fit()
+                    .into((ImageView) findViewById(R.id.add_publication_image));
+
+        }
     }
 }
