@@ -2,7 +2,6 @@ package com.svalero.toteco_app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 import com.squareup.picasso.Picasso;
@@ -22,11 +23,12 @@ import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.util.ImageAdapter;
 import com.svalero.toteco_app.util.Utils;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPublicationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class AddPublicationActivity extends AppCompatActivity
+        implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
+        DeleteProductFragment.NoticeDialogListener, ModifyProductFragment.NoticeDialogListener {
 
     public List<Product> products;
     private ArrayAdapter<Product> productsAdapter;
@@ -52,6 +54,7 @@ public class AddPublicationActivity extends AppCompatActivity implements Adapter
         productsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, products);
         lvProducts.setAdapter(productsAdapter);
         lvProducts.setOnItemClickListener(this);
+        lvProducts.setOnItemLongClickListener(this);
     }
 
     private void setEstablishment() {
@@ -267,13 +270,25 @@ public class AddPublicationActivity extends AppCompatActivity implements Adapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         Product product = products.get(position);
-        Intent intent = new Intent(this, AddProductActivity.class);
-        intent.putExtra("modify", product.getId());
-        startActivity(intent);
+        DialogFragment newFragment = new ModifyProductFragment(db, product);
+        newFragment.show(getSupportFragmentManager(), "modify");
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Product product = products.get(position);
+        DialogFragment newFragment = new DeleteProductFragment(db, product);
+        newFragment.show(getSupportFragmentManager(), "delete");
+        return true;
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        refreshList();
     }
 }

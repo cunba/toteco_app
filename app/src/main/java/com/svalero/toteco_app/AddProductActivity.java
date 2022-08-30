@@ -20,7 +20,6 @@ import java.util.List;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    private Product product;
     private AppDatabase db;
 
     @Override
@@ -28,24 +27,8 @@ public class AddProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("modify", 0);
-        if (id != 0) {
-            product = db.productDao().findById(id);
-            productToModify();
-        }
-    }
-
-    private void productToModify() {
-        EditText etName = findViewById(R.id.add_product_name);
-        EditText etPrice = findViewById(R.id.add_product_price);
-        EditText etPunctuation = findViewById(R.id.add_product_punctuation);
-
-        etName.setText(product.getName());
-        etPrice.setText(String.valueOf(product.getPrice()));
-        etPunctuation.setText(String.valueOf(product.getPunctuation()));
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco")
+                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
     }
 
     public void addProduct(View view) {
@@ -77,17 +60,9 @@ public class AddProductActivity extends AppCompatActivity {
             } else {
                 tvError.setText("");
 
-                if (product != null) {
-                    product.setName(name);
-                    product.setPunctuation(punctuation);
-                    product.setPrice(price);
-                    db.productDao().update(product);
-                } else {
-                    Product newProduct = new Product(name, price, punctuation, 1);
-                    db.productDao().insert(newProduct);
-                }
+                Product newProduct = new Product(name, price, punctuation, 1);
+                db.productDao().insert(newProduct);
 
-                product = null;
                 etName.setText("");
                 etPrice.setText("");
                 etPunctuation.setText("");

@@ -44,6 +44,17 @@
     <string name="add_establishment">Añadir establecimiento</string>
     <string name="add_establishment_name">Nombre</string>
     <string name="add_establishment_punctuation">Puntuación</string>
+    <!--    Modify product  -->
+    <string name="modify_product_title">MODIFICAR PRODUCTO</string>
+    <string name="modify_product_name">Nombre</string>
+    <string name="modify_product_price">Precio</string>
+    <string name="modify_product_punctuation">Punctuación</string>
+    <string name="modify_product_submit">Modificar</string>
+    <string name="modify_product_cancel">Cancelar</string>
+    <!--    Delete product  -->
+    <string name="delete_product_message">¿Estás seguro que quieres %s?</string>
+    <string name="delete_submit">Eliminar</string>
+    <string name="delete_cancel">Cancelar</string>
     <!--    Drawer  -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
