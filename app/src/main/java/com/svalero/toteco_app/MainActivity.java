@@ -40,12 +40,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void createAuxEstablishment() {
         try {
-            Establishment e = db.establishmentDao().findById(1);
+            db.establishmentDao().findById(1);
         } catch (Exception e) {
             Establishment establishment = new Establishment("", 0, 0, true, 0);
             db.establishmentDao().insert(establishment);
-            establishment = db.establishmentDao().findById(1);
-            System.out.println(establishment.toString());
+        }
+        try {
+            db.publicationDao().findById(1);
+        } catch (Exception e) {
+            List<User> users = db.userDao().findAll();
+            if (users.size() != 0) {
+                Publication publication = new Publication(0, 0, 1, 0);
+                db.publicationDao().insert(publication);
+            }
         }
     }
 

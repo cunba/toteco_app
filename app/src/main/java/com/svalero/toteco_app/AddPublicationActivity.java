@@ -2,7 +2,9 @@ package com.svalero.toteco_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,10 +22,11 @@ import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.util.ImageAdapter;
 import com.svalero.toteco_app.util.Utils;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPublicationActivity extends AppCompatActivity {
+public class AddPublicationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public List<Product> products;
     private ArrayAdapter<Product> productsAdapter;
@@ -48,6 +51,7 @@ public class AddPublicationActivity extends AppCompatActivity {
         ListView lvProducts = findViewById(R.id.add_publication_product_list);
         productsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, products);
         lvProducts.setAdapter(productsAdapter);
+        lvProducts.setOnItemClickListener(this);
     }
 
     private void setEstablishment() {
@@ -258,5 +262,18 @@ public class AddPublicationActivity extends AppCompatActivity {
                     .into((ImageView) findViewById(R.id.add_publication_image));
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Product product = products.get(position);
+        Intent intent = new Intent(this, AddProductActivity.class);
+        intent.putExtra("modify", product.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }
