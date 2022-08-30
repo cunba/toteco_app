@@ -8,7 +8,8 @@
     <string name="error_password">Both passwords must be the same</string>
     <string name="error_username">User %s already exists</string>
     <string name="error_products_empty">There are no added products</string>
-    <string name="error_establishment_empty">You must add an establishment</string>
+    <string name="error_establishment_empty">There are no establishment added</string>
+    <string name="error_empty_image">There are no image added</string>
     <!--    Main activity   -->
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -23,7 +24,7 @@
     <string name="user_create">User with username %s created.</string>
     <!--    Publications activity   -->
     <string name="card_price">PRICE: %s €</string>
-    <string name="card_punctuation">PUNCTUATION: %s / 5 ★</string>
+    <string name="card_punctuation">PUNCTUATION: %s/5 ★</string>
     <!--    Add publication -->
     <string name="add_publication_total_price">TOTAL PRICE: %s €</string>
     <string name="add_publication_total_punctuation">TOTAL PUNCTUATION: %s / 5 ★</string>

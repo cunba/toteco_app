@@ -79,7 +79,8 @@ public class Establishment {
     @Override
     public String toString() {
         return "Establishment{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", open=" + open +

@@ -20,9 +20,12 @@ import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.util.PublicationToRecyclerView;
 import com.svalero.toteco_app.util.RecyclerViewAdapter;
+import com.svalero.toteco_app.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 public class PublicationsActivity extends AppCompatActivity {
 
@@ -127,8 +130,8 @@ public class PublicationsActivity extends AppCompatActivity {
         publications.stream().forEach((p) -> {
             Establishment establishment = db.publicationDao().findEstablishmentByPublicationId(p.getEstablishmentId()).getEstablishment();
             List<Product> products = db.productDao().findByPublicationId(p.getId());
-            double totalPrice = Math.round(p.getTotalPrice()*100.0)/100.0;
-            double totalPunctuation = Math.round(p.getTotalPunctuation()*100.0)/100.0;
+            double totalPrice = Utils.roundNumber(p.getTotalPrice());
+            double totalPunctuation = Utils.roundNumber(p.getTotalPunctuation());
             PublicationToRecyclerView publicationToRecyclerView = new PublicationToRecyclerView(
                     p.getId(),
                     establishment.getName(),

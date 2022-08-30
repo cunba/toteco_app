@@ -6,7 +6,8 @@
     <string name="error_username">El usuario %s ya existe</string>
     <string name="error_user">Usuario o contraseña incorrectos</string>
     <string name="error_products_empty">No hay productos añadidos</string>
-    <string name="error_establishment_empty">Debes añadir un establecimiento</string>
+    <string name="error_establishment_empty">No hay establiecimiento añadido</string>
+    <string name="error_empty_image">No hay imagen añadida</string>
     <!--    Main activity   -->
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
@@ -20,8 +21,8 @@
     <string name="confirm_password">Confirm password</string>
     <string name="user_create">Usuario con nombre %s creado con éxito.</string>
     <!--    Publications activity   -->
-    <string name="card_price">PRECIO TOTAL: %s €</string>
-    <string name="card_punctuation">PUNTUACIÓN TOTAL: %s / 5 ★</string>
+    <string name="card_price">PRECIO: %s €</string>
+    <string name="card_punctuation">PUNTUACIÓN: %s/5 ★</string>
     <!--    Add publication -->
     <string name="add_publication_total_price">PRECIO TOTAL: %s €</string>
     <string name="add_publication_total_punctuation">PUNTUACIÓN TOTAL: %s / 5 ★</string>

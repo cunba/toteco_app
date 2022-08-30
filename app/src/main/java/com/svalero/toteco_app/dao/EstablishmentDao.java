@@ -16,6 +16,9 @@ public interface EstablishmentDao {
     @Query("SELECT * FROM establishments WHERE name = :name")
     List<Establishment> findByName(String name);
 
+    @Query("SELECT * FROM establishments WHERE name = :name AND id != 1")
+    List<Establishment> findByNameExceptAux(String name);
+
     @Query("SELECT * FROM establishments WHERE id = :id")
     Establishment findById(int id);
 

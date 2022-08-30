@@ -3,38 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../../layout/custom_preview.xml" value="0.23353596757852077" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1785" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/drawable/drawer.xml" value="0.1785" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1785" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/drawable/side_nav_bar.xml" value="0.1785" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_add_establishment.xml" value="0.1796875" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_add_product.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_add_publication.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_drawer.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_main.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_publications.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/activity_register.xml" value="0.1796875" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/app_bar_drawer.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/content_drawer.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/drawer.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/fragment_gallery.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/fragment_home.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/fragment_slideshow.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/list_item.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/layout/nav_header_drawer.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/menu/actionbar.xml" value="0.1" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/menu/activity_drawer_drawer.xml" value="0.1796875" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/menu/back_bar.xml" value="0.22" />
-        <entry key="..\:/Users/irecu/Documents/android/toteco_app/app/src/main/res/menu/navigation_menu.xml" value="0.16666666666666666" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.184" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.184" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12968591691995948" />
+        <entry key="app/src/main/res/layout/activity_add_establishment.xml" value="0.28125" />
+        <entry key="app/src/main/res/layout/activity_add_publication.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23480243161094225" />
         <entry key="app/src/main/res/layout/activity_publications.xml" value="0.23480243161094225" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.23480243161094225" />
-        <entry key="app/src/main/res/layout/list_item.xml" value="0.23429584599797365" />
-        <entry key="app/src/main/res/layout/sample_action_bar.xml" value="0.23480243161094225" />
-        <entry key="app/src/main/res/menu/actionbar.xml" value="0.27037037037037037" />
+        <entry key="app/src/main/res/layout/fragment_recycler_item.xml" value="0.23480243161094225" />
+        <entry key="app/src/main/res/layout/fragment_recycler_item_list.xml" value="0.22796352583586627" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.23480243161094225" />
       </map>
     </option>
   </component>

@@ -139,13 +139,9 @@ public class AddEstablishmentActivity extends AppCompatActivity implements OnMap
             } else {
                 if (establishment.getId() == 0) {
                     establishment.setName(establishmentName);
-                    establishment.setPunctuation(establishmentPunctuation);
-                } else {
-                    int establishmentPublications = db.establishmentDao().countPublicationsByEstablishmentId(establishment.getId());
-                    float punctuation = (establishment.getPunctuation() + establishmentPunctuation) / establishmentPublications;
-                    establishment.setPunctuation(punctuation);
                 }
 
+                establishment.setPunctuation(establishmentPunctuation);
                 establishment.setId(1);
                 db.establishmentDao().update(establishment);
 

@@ -1,42 +1,27 @@
 package com.svalero.toteco_app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.room.Room;
-
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import com.squareup.picasso.Picasso;
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Establishment;
 import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.util.ImageAdapter;
+import com.svalero.toteco_app.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AddPublicationActivity extends AppCompatActivity {
 
@@ -55,6 +40,10 @@ public class AddPublicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_publication);
 
+        db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
+
         products = new ArrayList<>();
         ListView lvProducts = findViewById(R.id.add_publication_product_list);
         productsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, products);
@@ -65,32 +54,45 @@ public class AddPublicationActivity extends AppCompatActivity {
         TextView tvEstablishmentName = findViewById(R.id.add_publication_establishment_name);
         TextView tvEstablishmentPunctuation = findViewById(R.id.add_publication_establishment_punctuation);
 
-        establishment = db.establishmentDao().findById(1);
-        if (establishment.getName().equals("")) {
-            tvEstablishmentName.setText(R.string.add_publication_establishment_add);
-            tvEstablishmentPunctuation.setText(R.string.add_publication_establishment_punctuation);
-        } else {
-            tvEstablishmentName.setText(establishment.getName());
-            double price = Math.round(establishment.getPunctuation() * 100) / 100;
-            String sPrice = String.valueOf(price);
-            tvEstablishmentPunctuation.setText(getString(R.string.add_publication_establishment_punctuation_print, sPrice));
+        try {
+            establishment = db.establishmentDao().findById(1);
+            if (establishment.getName().equals("")) {
+                tvEstablishmentName.setText(R.string.add_publication_establishment_add);
+                tvEstablishmentPunctuation.setText(R.string.add_publication_establishment_punctuation);
+            } else {
+                // We make sure that the establishment exists or not
+                List<Establishment> exists = db.establishmentDao().findByNameExceptAux(establishment.getName());
+                if (exists.size() != 0) {
+                    exists.stream().forEach(e -> {
+                        if (e.getLatitude() == establishment.getLatitude() && e.getLongitude() == establishment.getLongitude()) {
+                            establishment.setId(e.getId());
+                            establishment.setOpen(e.isOpen());
+                        }
+                    });
+                }
+                tvEstablishmentName.setText(establishment.getName());
+                double price = Utils.roundNumber(establishment.getPunctuation());
+                String sPrice = String.valueOf(price);
+                tvEstablishmentPunctuation.setText(getString(R.string.add_publication_establishment_punctuation_print, sPrice));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-         db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "toteco").allowMainThreadQueries()
-                .fallbackToDestructiveMigration().build();
         //Delete unsaved products
         try {
             db.productDao().deleteByPublicationId(1);
         } catch (Exception e) {
-            System.out.println("no hay publicacion auxiliar");
+            System.out.println(e.getMessage());
         }
+
+        // Clean the aux establishment
+        clearEstablishmentAux();
 
         Intent intent = new Intent(this, PublicationsActivity.class);
         startActivity(intent);
@@ -111,10 +113,6 @@ public class AddPublicationActivity extends AppCompatActivity {
     }
 
     private void loadProducts() {
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "toteco").allowMainThreadQueries()
-                .fallbackToDestructiveMigration().build();
-
         products.clear();
 
         try {
@@ -129,14 +127,14 @@ public class AddPublicationActivity extends AppCompatActivity {
                 .map(Product::getPrice)
                 .mapToDouble(price -> price)
                 .sum();
-        totalPrice = Math.round(totalPrice*100.0)/100.0;
+        totalPrice = Utils.roundNumber(totalPrice);
 
         if (products.size() != 0) {
             totalPunctuation = products.stream()
                     .map(Product::getPunctuation)
                     .mapToDouble(punctuation -> punctuation)
                     .sum() / products.size();
-            totalPunctuation = Math.round(totalPunctuation*100.0)/100.0;
+            totalPunctuation = Utils.roundNumber(totalPunctuation);
         }
 
         TextView tvTotalPrice = findViewById(R.id.add_publication_total_price);
@@ -147,30 +145,31 @@ public class AddPublicationActivity extends AppCompatActivity {
     }
 
     public void onPressAddProduct(View view) {
+        TextView tvError = findViewById(R.id.add_publication_error);
+        tvError.setText("");
         Intent intent = new Intent(this, AddProductActivity.class);
         startActivity(intent);
     }
 
     public void onPressAddEstablishment(View view) {
+        TextView tvError = findViewById(R.id.add_publication_error);
+        tvError.setText("");
         Intent intent = new Intent(this, AddEstablishmentActivity.class);
-//        intent.putExtra("establishment", (Parcelable) establishment);
         startActivity(intent);
     }
 
     public void onPressAddImage(View view) {
+        TextView tvError = findViewById(R.id.add_publication_error);
+        tvError.setText("");
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SELECT_PICTURE_RESULT);
     }
 
     public void onPressSubmit(View view) {
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "toteco").allowMainThreadQueries()
-                .fallbackToDestructiveMigration().build();
-
         TextView tvEstablishmentName = findViewById(R.id.add_publication_establishment_name);
         TextView tvEstablishmentPunctuation = findViewById(R.id.add_publication_establishment_punctuation);
         TextView tvError = findViewById(R.id.add_publication_error);
-        ImageView productImageView = findViewById(R.id.add_publication_image);
+        ImageView ivPublication = findViewById(R.id.add_publication_image);
 
         String establishmentName = tvEstablishmentName.toString();
         String establishmentPunctuationString = tvEstablishmentPunctuation.toString();
@@ -179,23 +178,36 @@ public class AddPublicationActivity extends AppCompatActivity {
             tvError.setText(R.string.error_establishment_empty);
         } else if (products.size() == 0) {
             tvError.setText(R.string.error_products_empty);
+        } else if (ivPublication.getDrawable() == null) {
+            tvError.setText(R.string.error_empty_image);
         } else {
             tvError.setText("");
-            float establishmentPunctuation = Float.parseFloat(establishmentPunctuationString);
-            byte[] publicationImage = ImageAdapter.fromImageViewToByteArray(productImageView);
+            byte[] publicationImage = ImageAdapter.fromImageViewToByteArray(ivPublication);
+            double establishmentPunctuation = (establishment.getPunctuation() + totalPunctuation) / (1 + products.size());
 
             // if the establishment doesnt exists we create it
-            if (establishment.getId() == 0) {
-                establishment.setName(establishmentName);
-                establishment.setPunctuation(establishmentPunctuation);
-                db.establishmentDao().insert(establishment);
+            if (establishment.getId() == 1) {
+                Establishment newEstablishment = new Establishment(
+                        establishment.getName(),
+                        establishment.getLatitude(),
+                        establishment.getLongitude(),
+                        true,
+                        (float) establishmentPunctuation
+                );
+                db.establishmentDao().insert(newEstablishment);
                 establishment = db.establishmentDao().findLast();
-                System.out.println(establishment.getName());
+            } else {
+                // Recalculate the establishment punctuation
+                int establishmentPublications = db.establishmentDao().countPublicationsByEstablishmentId(establishment.getId()) + 1;
+                Establishment e = db.establishmentDao().findById(establishment.getId());
+                float punctuation = (float) ((e.getPunctuation() + establishmentPunctuation) / establishmentPublications);
+                establishment.setPunctuation(punctuation);
+                db.establishmentDao().update(establishment);
             }
 
             Publication publication = new Publication(
-                    Float.parseFloat(String.valueOf(totalPrice)),
-                    Float.parseFloat(String.valueOf(totalPunctuation)),
+                    (float) totalPrice,
+                    (float) totalPunctuation,
                     1,
                     establishment.getId());
 
@@ -212,17 +224,29 @@ public class AddPublicationActivity extends AppCompatActivity {
 
             Toast.makeText(this, R.string.publication_created, Toast.LENGTH_SHORT).show();
 
-            tvEstablishmentName.setText("");
-            tvEstablishmentPunctuation.setText("");
+            tvEstablishmentName.setText(R.string.add_publication_establishment_add);
+            tvEstablishmentPunctuation.setText(R.string.add_publication_establishment_punctuation);
             tvError.setText("");
             products.clear();
-            establishment = null;
+
+            // Clean the aux establishment
+            clearEstablishmentAux();
+
             totalPrice = 0;
             totalPunctuation = 0;
 
             Intent intent = new Intent(this, PublicationsActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void clearEstablishmentAux() {
+        establishment.setId(1);
+        establishment.setName("");
+        establishment.setPunctuation(0);
+        establishment.setLatitude(0);
+        establishment.setLongitude(0);
+        db.establishmentDao().update(establishment);
     }
 
     @Override

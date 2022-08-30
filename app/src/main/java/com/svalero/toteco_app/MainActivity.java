@@ -20,10 +20,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private AppDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
     }
 
     @Override
@@ -33,14 +39,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createAuxEstablishment() {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "toteco").allowMainThreadQueries()
-                .fallbackToDestructiveMigration().build();
-
-        List<Establishment> establishments = db.establishmentDao().findAll();
-        if (establishments.size() == 0) {
-            Establishment establishment = new Establishment("aux", 0, 0, true, 0);
+        try {
+            Establishment e = db.establishmentDao().findById(1);
+        } catch (Exception e) {
+            Establishment establishment = new Establishment("", 0, 0, true, 0);
             db.establishmentDao().insert(establishment);
+            establishment = db.establishmentDao().findById(1);
+            System.out.println(establishment.toString());
         }
     }
 
@@ -65,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             tvError.setText(R.string.error_field_empty);
         } else {
             // Get the user
-            AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
             List<User> user = db.userDao().findByUsernameAndPassword(username, password);
 
             // If the list is empty means that the user with this username and password doesn't exists
