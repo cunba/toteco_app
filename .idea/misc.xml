@@ -3,15 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../../layout/custom_preview.xml" value="0.23353596757852077" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.184" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.184" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12968591691995948" />
+        <entry key="app/src/main/res/layout/activity_add_establishment.xml" value="0.28125" />
+        <entry key="app/src/main/res/layout/activity_add_product.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/activity_add_publication.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_drawer.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23480243161094225" />
+        <entry key="app/src/main/res/layout/activity_modify_product.xml" value="0.48333333333333334" />
         <entry key="app/src/main/res/layout/activity_publications.xml" value="0.23480243161094225" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.23480243161094225" />
-        <entry key="app/src/main/res/layout/list_item.xml" value="0.23429584599797365" />
-        <entry key="app/src/main/res/layout/sample_action_bar.xml" value="0.23480243161094225" />
-        <entry key="app/src/main/res/menu/actionbar.xml" value="0.27037037037037037" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_add_product.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_delete.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_modify_product.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_recycler_item.xml" value="0.23480243161094225" />
+        <entry key="app/src/main/res/layout/fragment_recycler_item_list.xml" value="0.22796352583586627" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.23480243161094225" />
+        <entry key="app/src/main/res/layout/nav_header_drawer.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/menu/actionbar.xml" value="0.4973958333333333" />
       </map>
     </option>
   </component>

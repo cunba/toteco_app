@@ -3,9 +3,11 @@ package com.svalero.toteco_app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.User;
+
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,6 +35,16 @@ public class RegisterActivity extends AppCompatActivity {
         EditText etPassword = findViewById(R.id.register_password);
         EditText etConfirmPassword = findViewById(R.id.register_confirm_password);
         TextView tvError = findViewById(R.id.register_error);
+
+        // Clear focuses and hide keyboard
+        etUsername.clearFocus();
+        etName.clearFocus();
+        etSurname.clearFocus();
+        etBirthday.clearFocus();
+        etPassword.clearFocus();
+        etConfirmPassword.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etConfirmPassword.getWindowToken(), 0);
 
         // We convert the values into strings
         String username = etUsername.getText().toString();
@@ -57,33 +71,38 @@ public class RegisterActivity extends AppCompatActivity {
             etConfirmPassword.setText("");
             etPassword.requestFocus();
         } else {
-            tvError.setText("");
-
-            // If there is not errors we create the user
-            User newUser = new User(
-                username,
-                name,
-                surname,
-                birthday,
-                password
-            );
-
-            // We insert the user into the local database and create a popup
             AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-            db.userDao().insert(newUser);
-            Toast.makeText(this, getString(R.string.user_create, username), Toast.LENGTH_SHORT).show();
+            List<User> user = db.userDao().findByUsername(username);
+            if (user.size() != 0) {
+                tvError.setText(getString(R.string.error_username, username));
+            } else {
+                tvError.setText("");
 
-            // We clear all the texts
-            etUsername.setText("");
-            etName.setText("");
-            etSurname.setText("");
-            etBirthday.setText("");
-            etPassword.setText("");
-            etConfirmPassword.setText("");
+                // If there is not errors we create the user
+                User newUser = new User(
+                        username,
+                        name,
+                        surname,
+                        birthday,
+                        password
+                );
 
-            // Move to main activity
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+                // We insert the user into the local database and create a popup
+                db.userDao().insert(newUser);
+                Toast.makeText(this, getString(R.string.user_create, username), Toast.LENGTH_SHORT).show();
+
+                // We clear all the texts
+                etUsername.setText("");
+                etName.setText("");
+                etSurname.setText("");
+                etBirthday.setText("");
+                etPassword.setText("");
+                etConfirmPassword.setText("");
+
+                // Move to main activity
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
         }
     }
 }

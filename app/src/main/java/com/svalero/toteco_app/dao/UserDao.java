@@ -19,6 +19,12 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username AND password = :password")
     List<User> findByUsernameAndPassword(String username, String password);
 
+    @Query("SELECT * FROM users WHERE username = :username")
+    List<User> findByUsername(String username);
+
+    @Query("SELECT id FROM users WHERE username = :username")
+    List<Integer> findIdByUsername(String username);
+
     @Insert
     void insert(User user);
 

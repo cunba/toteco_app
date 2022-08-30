@@ -2,6 +2,7 @@ package com.svalero.toteco_app.domain;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "establishments")
@@ -11,15 +12,15 @@ public class Establishment {
     @ColumnInfo
     private String name;
     @ColumnInfo
-    private float latitude;
+    private double latitude;
     @ColumnInfo
-    private float longitude;
+    private double longitude;
     @ColumnInfo
     private boolean open;
     @ColumnInfo
     private float punctuation;
 
-    public Establishment(String name, float latitude, float longitude, boolean open, float punctuation) {
+    public Establishment(String name, double latitude, double longitude, boolean open, float punctuation) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -43,19 +44,19 @@ public class Establishment {
         this.name = name;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -73,5 +74,17 @@ public class Establishment {
 
     public void setPunctuation(float punctuation) {
         this.punctuation = punctuation;
+    }
+
+    @Override
+    public String toString() {
+        return "Establishment{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", open=" + open +
+                ", punctuation=" + punctuation +
+                '}';
     }
 }

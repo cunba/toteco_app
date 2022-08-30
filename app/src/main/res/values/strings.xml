@@ -1,21 +1,74 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false" tools:ignore="MissingTranslation">TOTECO APP</string>
+    <string name="maps_key" translatable="false" tools:ignore="MissingTranslation">AIzaSyAkZTtsLnT0yNfooyTmRCAbMwcc60aBzOM</string>
+
+    <!--    Errors  -->
+    <string name="error_user">Wrong username or password</string>
+    <string name="error_field_empty">Fields can not be empty</string>
+    <string name="error_password">Both passwords must be the same</string>
+    <string name="error_username">User %s already exists</string>
+    <string name="error_products_empty">There are no added products</string>
+    <string name="error_establishment_empty">There are no establishment added</string>
+    <string name="error_empty_image">There are no image added</string>
     <!--    Main activity   -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="register_placeholder">Register here if you do not have an account</string>
-    <string name="error_user">Wrong username or password</string>
     <!--    Register activity   -->
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="birthday">Birthday</string>
     <string name="confirm_password">Confirm password</string>
-    <string name="error_field_empty">Fields can not be empty</string>
-    <string name="error_password">Both passwords must be the same</string>
     <string name="user_create">User with username %s created.</string>
-<!--    Publications activity   -->
-    <string name="card_price">PRICE: %f €</string>
-    <string name="card_punctuation">PUNCTUATION: %f / 5</string>
+    <!--    Publications activity   -->
+    <string name="card_price">PRICE: %s €</string>
+    <string name="card_punctuation">PUNCTUATION: %s/5 ★</string>
+    <!--    Add publication -->
+    <string name="add_publication_total_price">TOTAL PRICE: %s €</string>
+    <string name="add_publication_total_punctuation">TOTAL PUNCTUATION: %s / 5 ★</string>
+    <string name="add_publication_establishment_punctuation_print">%s / 5 ★</string>
+    <string name="add_product">Add product</string>
+    <string name="add_publication">Add publication</string>
+    <string name="submit">Submit</string>
+    <string name="publication_created">Publication created</string>
+    <string name="add_publication_add_image">Add image</string>
+    <string name="add_publication_establishment_add">Select establishment</string>
+    <string name="add_publication_establishment_punctuation">Establishment punctuation</string>
+    <!--    Add product     -->
+    <string name="add_product_name">Name</string>
+    <string name="add_product_price">Price</string>
+    <string name="add_product_punctuation">Punctuation</string>
+    <string name="add_product_error_price_punctuation">Price and punctuation must be 0 or more</string>
+    <string name="add_product_error_punctuation">The punctuation must be between 0 and 5</string>
+    <string name="add_product_submit">Add</string>
+    <string name="add_product_cancel">Cancel</string>
+    <!--    Add establishment  -->
+    <string name="add_establishment">Add establishment</string>
+    <string name="add_establishment_name">Name</string>
+    <string name="add_establishment_punctuation">Punctuation</string>
+    <!--    Modify product  -->
+    <string name="modify_product_title">MODIFY PRODUCT</string>
+    <string name="modify_product_name">Name</string>
+    <string name="modify_product_price">Price</string>
+    <string name="modify_product_punctuation">Punctuation</string>
+    <string name="modify_product_submit">Modify</string>
+    <string name="modify_product_cancel">Cancel</string>
+    <!--    Delete  -->
+    <string name="delete_product_message">Are you sure you want to delete %s?</string>
+    <string name="delete_submit">Delete</string>
+    <string name="delete_cancel">Cancel</string>
+    <!--    Delete publication  -->
+    <string name="delete_publication_message">Are you sure you want to delete the publication?</string>
+    <!--    Drawer  -->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="nav_publications">Publications</string>
+    <string name="nav_add_publication">Add publication</string>
+    <string name="nav_locations">Locations</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_logout">Sign out</string>
+    <string name="nav_header_title">%1s %2s</string>
+    <string name="nav_header_subtitle">%s</string>
 </resources>
