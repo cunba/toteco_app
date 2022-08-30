@@ -42,6 +42,8 @@
     <string name="add_product_punctuation">Punctuation</string>
     <string name="add_product_error_price_punctuation">Price and punctuation must be 0 or more</string>
     <string name="add_product_error_punctuation">The punctuation must be between 0 and 5</string>
+    <string name="add_product_submit">Add</string>
+    <string name="add_product_cancel">Cancel</string>
     <!--    Add establishment  -->
     <string name="add_establishment">Add establishment</string>
     <string name="add_establishment_name">Name</string>

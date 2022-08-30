@@ -28,7 +28,7 @@ import java.util.List;
 
 public class AddPublicationActivity extends AppCompatActivity
         implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
-        DeleteProductFragment.NoticeDialogListener, ModifyProductFragment.NoticeDialogListener {
+        DeleteProductFragment.NoticeDialogListener, ModifyProductFragment.NoticeDialogListener, AddProductFragment.NoticeDialogListener {
 
     public List<Product> products;
     private ArrayAdapter<Product> productsAdapter;
@@ -154,8 +154,8 @@ public class AddPublicationActivity extends AppCompatActivity
     public void onPressAddProduct(View view) {
         TextView tvError = findViewById(R.id.add_publication_error);
         tvError.setText("");
-        Intent intent = new Intent(this, AddProductActivity.class);
-        startActivity(intent);
+        DialogFragment newFragment = new AddProductFragment(db);
+        newFragment.show(getSupportFragmentManager(), "add");
     }
 
     public void onPressAddEstablishment(View view) {
@@ -290,5 +290,16 @@ public class AddPublicationActivity extends AppCompatActivity
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         refreshList();
+        makeSummary();
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, String error) {
+        if (error.equals("")) {
+            refreshList();
+            makeSummary();
+        } else {
+            Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        }
     }
 }

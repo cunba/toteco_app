@@ -40,6 +40,8 @@
     <string name="add_product_punctuation">Puntuación</string>
     <string name="add_product_error_price_punctuation">La puntuación y el precio deben ser 0 o más</string>
     <string name="add_product_error_punctuation">La puntuación deben estar comprendida entre 0 y 5</string>
+    <string name="add_product_submit">Añadir</string>
+    <string name="add_product_cancel">Cancelar</string>
     <!--    Add establishment  -->
     <string name="add_establishment">Añadir establecimiento</string>
     <string name="add_establishment_name">Nombre</string>

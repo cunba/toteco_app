@@ -26,6 +26,7 @@ public class ModifyProductFragment extends DialogFragment {
 
     private final AppDatabase db;
     private final Product product;
+    private String error = "";
 
     public ModifyProductFragment(AppDatabase db, Product product) {
         this.db = db;
@@ -33,7 +34,7 @@ public class ModifyProductFragment extends DialogFragment {
     }
 
     public interface NoticeDialogListener {
-        void onDialogPositiveClick(DialogFragment dialog);
+        void onDialogPositiveClick(DialogFragment dialog, String error);
     }
 
     // Use this instance of the interface to deliver action events
@@ -59,7 +60,7 @@ public class ModifyProductFragment extends DialogFragment {
                 // Add action buttons
                 .setPositiveButton(R.string.modify_product_submit, (dialog, id) -> {
                     onPressSubmit(view);
-                    listener.onDialogPositiveClick(ModifyProductFragment.this);
+                    listener.onDialogPositiveClick(ModifyProductFragment.this, error);
                 })
                 .setNegativeButton(R.string.modify_product_cancel, (dialog, id) ->
                     ModifyProductFragment.this.getDialog().cancel()
@@ -96,7 +97,6 @@ public class ModifyProductFragment extends DialogFragment {
         EditText etName = view.findViewById(R.id.modify_product_name);
         EditText etPrice = view.findViewById(R.id.modify_product_price);
         EditText etPunctuation = view.findViewById(R.id.modify_product_punctuation);
-        TextView tvError = view.findViewById(R.id.modify_product_error);
 
         etName.clearFocus();
         etPrice.clearFocus();
@@ -107,17 +107,17 @@ public class ModifyProductFragment extends DialogFragment {
         String punctuationString = etPunctuation.getText().toString();
 
         if (name.equals("") || priceString.equals("") || punctuationString.equals("")) {
-            tvError.setText(R.string.error_field_empty);
+            error = getString(R.string.error_field_empty);
         } else {
             float price = Float.parseFloat(priceString);
             float punctuation = Float.parseFloat(punctuationString);
 
             if (price < 0.0 || punctuation < 0.0) {
-                tvError.setText(R.string.add_product_error_price_punctuation);
+                error = getString(R.string.add_product_error_price_punctuation);
             } else if (punctuation > 5.0) {
-                tvError.setText(R.string.add_product_error_punctuation);
+                error = getString(R.string.add_product_error_punctuation);
             } else {
-                tvError.setText("");
+                error = "";
 
                 product.setName(name);
                 product.setPunctuation(punctuation);

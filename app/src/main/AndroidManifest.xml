@@ -31,9 +31,6 @@
             android:value="@string/maps_key" />
 
         <activity
-            android:name=".AddProductActivity"
-            android:exported="false" />
-        <activity
             android:name=".AddPublicationActivity"
             android:exported="false" />
         <activity
