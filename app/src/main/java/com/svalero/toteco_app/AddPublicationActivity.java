@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 import com.squareup.picasso.Picasso;
@@ -28,7 +27,7 @@ import java.util.List;
 
 public class AddPublicationActivity extends AppCompatActivity
         implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
-        DeleteProductFragment.NoticeDialogListener, ModifyProductFragment.NoticeDialogListener, AddProductFragment.NoticeDialogListener {
+        DeleteProductDialog.NoticeDialogListener, ModifyProductFragment.NoticeDialogListener, AddProductFragment.NoticeDialogListener {
 
     public List<Product> products;
     private ArrayAdapter<Product> productsAdapter;
@@ -191,6 +190,7 @@ public class AddPublicationActivity extends AppCompatActivity
             tvError.setText("");
             byte[] publicationImage = ImageAdapter.fromImageViewToByteArray(ivPublication);
             double establishmentPunctuation = (establishment.getPunctuation() + totalPunctuation) / (1 + products.size());
+            System.out.println(establishmentPunctuation);
 
             // if the establishment doesnt exists we create it
             if (establishment.getId() == 1) {
@@ -203,10 +203,13 @@ public class AddPublicationActivity extends AppCompatActivity
                 );
                 db.establishmentDao().insert(newEstablishment);
                 establishment = db.establishmentDao().findLast();
+                System.out.println(establishment.getPunctuation());
             } else {
                 // Recalculate the establishment punctuation
                 int establishmentPublications = db.establishmentDao().countPublicationsByEstablishmentId(establishment.getId()) + 1;
                 Establishment e = db.establishmentDao().findById(establishment.getId());
+                System.out.println(e.getPunctuation());
+                System.out.println(establishmentPunctuation);
                 float punctuation = (float) ((e.getPunctuation() + establishmentPunctuation) / establishmentPublications);
                 establishment.setPunctuation(punctuation);
                 db.establishmentDao().update(establishment);
@@ -226,7 +229,6 @@ public class AddPublicationActivity extends AppCompatActivity
             products.stream().forEach(p -> {
                 p.setPublicationId(addedPublication.getId());
                 db.productDao().update(p);
-                System.out.println(p.getName());
             });
 
             Toast.makeText(this, R.string.publication_created, Toast.LENGTH_SHORT).show();
@@ -248,12 +250,14 @@ public class AddPublicationActivity extends AppCompatActivity
     }
 
     private void clearEstablishmentAux() {
-        establishment.setId(1);
-        establishment.setName("");
-        establishment.setPunctuation(0);
-        establishment.setLatitude(0);
-        establishment.setLongitude(0);
-        db.establishmentDao().update(establishment);
+        if (establishment != null) {
+            establishment.setId(1);
+            establishment.setName("");
+            establishment.setPunctuation(0);
+            establishment.setLatitude(0);
+            establishment.setLongitude(0);
+            db.establishmentDao().update(establishment);
+        }
     }
 
     @Override
@@ -277,7 +281,7 @@ public class AddPublicationActivity extends AppCompatActivity
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         Product product = products.get(position);
-        DialogFragment newFragment = new DeleteProductFragment(db, product);
+        DialogFragment newFragment = new DeleteProductDialog(db, product);
         newFragment.show(getSupportFragmentManager(), "delete");
         return true;
     }

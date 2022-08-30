@@ -12,12 +12,12 @@ import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Product;
 
 
-public class DeleteProductFragment extends DialogFragment {
+public class DeleteProductDialog extends DialogFragment {
 
     private final Product product;
     private final AppDatabase db;
 
-    public DeleteProductFragment(AppDatabase db, Product product) {
+    public DeleteProductDialog(AppDatabase db, Product product) {
         this.db = db;
         this.product = product;
     }
@@ -42,10 +42,10 @@ public class DeleteProductFragment extends DialogFragment {
         builder.setMessage(getString(R.string.delete_product_message, product.getName()))
                 .setPositiveButton(R.string.delete_submit, (dialog, id) -> {
                     db.productDao().delete(product);
-                    listener.onDialogPositiveClick(DeleteProductFragment.this);
+                    listener.onDialogPositiveClick(DeleteProductDialog.this);
                 })
                 .setNegativeButton(R.string.delete_cancel, (dialog, id) ->
-                    DeleteProductFragment.this.getDialog().cancel()
+                    DeleteProductDialog.this.getDialog().cancel()
                 );
         return builder.create();
     }

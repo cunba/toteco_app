@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Establishment;
+import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.User;
 
@@ -36,21 +37,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         createAuxEstablishment();
+        createAuxPublication();
     }
 
     private void createAuxEstablishment() {
         try {
-            db.establishmentDao().findById(1);
+            Establishment establishment = db.establishmentDao().findById(1);
+            System.out.println(establishment.toString());
         } catch (Exception e) {
             Establishment establishment = new Establishment("", 0, 0, true, 0);
             db.establishmentDao().insert(establishment);
         }
+    }
+
+    private void createAuxPublication() {
         try {
-            db.publicationDao().findById(1);
+            Publication publication = db.publicationDao().findById(1);
+            System.out.println(publication.toString());
         } catch (Exception e) {
             List<User> users = db.userDao().findAll();
             if (users.size() != 0) {
-                Publication publication = new Publication(0, 0, 1, 0);
+                Publication publication = new Publication(0, 0, 1, 1);
                 db.publicationDao().insert(publication);
             }
         }

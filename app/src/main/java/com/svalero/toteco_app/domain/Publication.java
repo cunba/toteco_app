@@ -7,6 +7,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.Arrays;
+
 @Entity(tableName = "publications",foreignKeys = {
         @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "user_id", onDelete = ForeignKey.CASCADE),
         @ForeignKey(entity = Establishment.class, parentColumns = "id", childColumns = "establishment_id", onDelete = ForeignKey.CASCADE)
@@ -84,5 +86,16 @@ public class Publication {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Publication{" +
+                "id=" + id +
+                ", totalPrice=" + totalPrice +
+                ", totalPunctuation=" + totalPunctuation +
+                ", userId=" + userId +
+                ", establishmentId=" + establishmentId +
+                '}';
     }
 }

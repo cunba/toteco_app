@@ -6,13 +6,23 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.svalero.toteco_app.DeleteProductDialog;
+import com.svalero.toteco_app.DeletePublicationDialog;
 import com.svalero.toteco_app.R;
+import com.svalero.toteco_app.database.AppDatabase;
+import com.svalero.toteco_app.domain.Product;
+import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.util.PublicationToRecyclerView;
 
 import java.util.List;
@@ -21,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private final List<PublicationToRecyclerView> publications;
+    private FragmentManager mFragment;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -32,9 +43,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private final TextView tvCardProducts;
         private final TextView tvCardPrice;
         private final TextView tvCardPunctuation;
+        private View view;
 
         public ViewHolder(View view) {
             super(view);
+            this.view = view;
             // Define click listener for the ViewHolder's View
 
             tvCardTitle = (TextView) view.findViewById(R.id.card_title);
@@ -68,11 +81,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     /**
      * Initialize the dataset of the Adapter.
      *
+     * @param fragment
      * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
      */
-    public RecyclerViewAdapter(List<PublicationToRecyclerView> dataSet) {
+    public RecyclerViewAdapter(FragmentManager fragment, List<PublicationToRecyclerView> dataSet) {
         publications = dataSet;
+        mFragment = fragment;
     }
 
     // Create new views (invoked by the layout manager)
@@ -89,7 +103,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // Replace the contents of a view (invoked by the layout manager)
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
+        // Configuration of the listener when the publication is clicked
+        viewHolder.view.setOnClickListener(v -> {
+            AppDatabase db = Room.databaseBuilder(viewHolder.itemView.getContext(),
+                            AppDatabase.class, "toteco").allowMainThreadQueries()
+                    .fallbackToDestructiveMigration().build();
+            PublicationToRecyclerView publicationToRecyclerView = publications.get(position);
+            Publication publication = db.publicationDao().findById(publicationToRecyclerView.getPublicationId());
+            DialogFragment newFragment = new DeletePublicationDialog(db, publication);
+            newFragment.show(mFragment, "delete");
+        });
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
@@ -115,5 +139,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return publications.size();
     }
+
 }
 

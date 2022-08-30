@@ -133,6 +133,8 @@ public class AddEstablishmentActivity extends AppCompatActivity implements OnMap
             tvError.setText(R.string.error_field_empty);
         } else {
             float establishmentPunctuation = Float.parseFloat(sEstablishmentPunctuation);
+            System.out.println(establishmentPunctuation);
+            System.out.println(sEstablishmentPunctuation);
 
             if (establishmentPunctuation > 5) {
                 tvError.setText(R.string.add_product_error_punctuation);

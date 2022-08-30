@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -13,6 +14,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Establishment;
@@ -27,12 +31,14 @@ import java.util.List;
 
 import okhttp3.internal.Util;
 
-public class PublicationsActivity extends AppCompatActivity {
+public class PublicationsActivity extends AppCompatActivity
+        implements DeletePublicationDialog.NoticeDialogListener, AdapterView.OnItemLongClickListener {
 
     private List<Publication> publications;
     private List<PublicationToRecyclerView> publicationsToRecyclerView;
     private RecyclerView.Adapter adapter;
     private AppDatabase db;
+    private RecyclerView rv;
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
@@ -55,6 +61,9 @@ public class PublicationsActivity extends AppCompatActivity {
 //        // to make the Navigation drawer icon always appear on the action bar
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco")
+                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
+
         publications = new ArrayList<>();
         loadPublications();
         publicationsToRecyclerView = new ArrayList<>();
@@ -71,7 +80,6 @@ public class PublicationsActivity extends AppCompatActivity {
     }
 
     private void deleteUnsavedProducts() {
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         try {
             db.productDao().deleteByPublicationId(1);
         } catch (Exception e) {
@@ -81,7 +89,6 @@ public class PublicationsActivity extends AppCompatActivity {
 
     private void loadPublications() {
         publications.clear();
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "toteco").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         publications.addAll(db.publicationDao().findAllExceptAux());
     }
 
@@ -112,7 +119,7 @@ public class PublicationsActivity extends AppCompatActivity {
 
     private void createRecyclerView() {
         // Get the recycler view
-        RecyclerView rv = findViewById(R.id.publication_recycler_view);
+        rv = findViewById(R.id.publication_recycler_view);
         rv.setHasFixedSize(true);
 
         // Use the linear layout
@@ -120,7 +127,7 @@ public class PublicationsActivity extends AppCompatActivity {
         rv.setLayoutManager(lManager);
 
         // Create the adapter
-        adapter = new RecyclerViewAdapter(publicationsToRecyclerView);
+        adapter = new RecyclerViewAdapter(getSupportFragmentManager(), publicationsToRecyclerView);
         rv.setAdapter(adapter);
     }
 
@@ -128,7 +135,7 @@ public class PublicationsActivity extends AppCompatActivity {
         publicationsToRecyclerView.clear();
 
         publications.stream().forEach((p) -> {
-            Establishment establishment = db.publicationDao().findEstablishmentByPublicationId(p.getEstablishmentId()).getEstablishment();
+            Establishment establishment = db.establishmentDao().findById(p.getEstablishmentId());
             List<Product> products = db.productDao().findByPublicationId(p.getId());
             double totalPrice = Utils.roundNumber(p.getTotalPrice());
             double totalPunctuation = Utils.roundNumber(p.getTotalPunctuation());
@@ -145,4 +152,20 @@ public class PublicationsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        refreshPublications();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+        System.out.println("entra");
+        AppDatabase db = Room.databaseBuilder(view.getContext(),
+                        AppDatabase.class, "toteco").allowMainThreadQueries()
+                .fallbackToDestructiveMigration().build();
+        Publication publication = publications.get(position);
+        DialogFragment newFragment = new DeletePublicationDialog(db, publication);
+        newFragment.show(getSupportFragmentManager(), "delete");
+        return true;
+    }
 }

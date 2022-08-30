@@ -59,6 +59,8 @@
     <string name="delete_product_message">Are you sure you want to delete %s?</string>
     <string name="delete_submit">Delete</string>
     <string name="delete_cancel">Cancel</string>
+    <!--    Delete publication  -->
+    <string name="delete_publication_message">Are you sure you want to delete the publication?</string>
     <!--    Drawer  -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>

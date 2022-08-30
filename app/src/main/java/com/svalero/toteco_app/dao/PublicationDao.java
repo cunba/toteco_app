@@ -22,7 +22,7 @@ public interface PublicationDao {
     @Query("SELECT * FROM publications")
     List<Publication> findAll();
 
-    @Query("SELECT * FROM publications WHERE id != 1")
+    @Query("SELECT * FROM publications WHERE id != 1 ORDER BY id DESC")
     List<Publication> findAllExceptAux();
 
     @Query("SELECT * FROM publications ORDER BY id DESC LIMIT 1")

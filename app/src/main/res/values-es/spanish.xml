@@ -54,9 +54,11 @@
     <string name="modify_product_submit">Modificar</string>
     <string name="modify_product_cancel">Cancelar</string>
     <!--    Delete product  -->
-    <string name="delete_product_message">¿Estás seguro que quieres %s?</string>
+    <string name="delete_product_message">¿Estás seguro que quieres eliminar %s?</string>
     <string name="delete_submit">Eliminar</string>
     <string name="delete_cancel">Cancelar</string>
+    <!--    Delete publication  -->
+    <string name="delete_publication_message">¿Estás seguro que quieres eliminar la publicación?</string>
     <!--    Drawer  -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>

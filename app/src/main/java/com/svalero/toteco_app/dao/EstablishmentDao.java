@@ -25,7 +25,7 @@ public interface EstablishmentDao {
     @Query("SELECT * FROM establishments")
     List<Establishment> findAll();
 
-    @Query("SELECT * FROM establishments WHERE id != 1 ORDER BY id DESC")
+    @Query("SELECT * FROM establishments WHERE id != 1")
     List<Establishment> findAllExceptAux();
 
     @Query("SELECT * FROM establishments ORDER BY id DESC LIMIT 1")
