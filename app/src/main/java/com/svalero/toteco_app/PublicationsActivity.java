@@ -116,8 +116,8 @@ public class PublicationsActivity extends AppCompatActivity
                 startActivity(intent);
                 return true;
             case R.id.locations_button:
-//                intent = new Intent(this, LocationsActivity.class);
-//                startActivity(intent);
+                intent = new Intent(this, LocationsActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.logout_button:
                 intent = new Intent(this, MainActivity.class);
