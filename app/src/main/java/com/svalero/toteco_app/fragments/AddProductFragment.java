@@ -1,4 +1,4 @@
-package com.svalero.toteco_app;
+package com.svalero.toteco_app.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.svalero.toteco_app.R;
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Product;
 

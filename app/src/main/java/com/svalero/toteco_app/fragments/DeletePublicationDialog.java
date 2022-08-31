@@ -1,4 +1,4 @@
-package com.svalero.toteco_app;
+package com.svalero.toteco_app.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,8 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.svalero.toteco_app.R;
 import com.svalero.toteco_app.database.AppDatabase;
-import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 
 public class DeletePublicationDialog extends DialogFragment {

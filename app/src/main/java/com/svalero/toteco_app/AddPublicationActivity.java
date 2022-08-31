@@ -19,6 +19,9 @@ import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Establishment;
 import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
+import com.svalero.toteco_app.fragments.AddProductFragment;
+import com.svalero.toteco_app.fragments.DeleteProductDialog;
+import com.svalero.toteco_app.fragments.ModifyProductFragment;
 import com.svalero.toteco_app.util.ImageAdapter;
 import com.svalero.toteco_app.util.Utils;
 

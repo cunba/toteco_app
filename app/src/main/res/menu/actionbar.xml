@@ -3,8 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/locations_button"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="logout"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/add_publication_button"
         android:icon="@android:drawable/ic_menu_add"
+        android:title="TODO"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/logout_button"
+        android:icon="@drawable/ic_logout"
         android:title="TODO"
         app:showAsAction="always" />
 </menu>
