@@ -6,22 +6,18 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.svalero.toteco_app.DeleteProductDialog;
-import com.svalero.toteco_app.DeletePublicationDialog;
+import com.svalero.toteco_app.fragments.DeletePublicationDialog;
 import com.svalero.toteco_app.R;
 import com.svalero.toteco_app.database.AppDatabase;
-import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.util.PublicationToRecyclerView;
 

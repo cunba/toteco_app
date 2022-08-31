@@ -1,5 +1,13 @@
 package com.svalero.toteco_app;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,27 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
-
 import com.svalero.toteco_app.database.AppDatabase;
 import com.svalero.toteco_app.domain.Establishment;
 import com.svalero.toteco_app.domain.Product;
 import com.svalero.toteco_app.domain.Publication;
 import com.svalero.toteco_app.domain.util.PublicationToRecyclerView;
+import com.svalero.toteco_app.fragments.DeletePublicationDialog;
 import com.svalero.toteco_app.util.RecyclerViewAdapter;
 import com.svalero.toteco_app.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.internal.Util;
 
 public class PublicationsActivity extends AppCompatActivity
         implements DeletePublicationDialog.NoticeDialogListener, AdapterView.OnItemLongClickListener {
@@ -106,12 +104,25 @@ public class PublicationsActivity extends AppCompatActivity
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.add_publication_button) {
-            Intent intent = new Intent(this, AddPublicationActivity.class);
-            startActivity(intent);
-            return true;
+        int id = item.getItemId();
+        Intent intent;
+
+        switch (id) {
+            case R.id.add_publication_button:
+                intent = new Intent(this, AddPublicationActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.locations_button:
+//                intent = new Intent(this, LocationsActivity.class);
+//                startActivity(intent);
+                return true;
+            case R.id.logout_button:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
         }
 
         return false;
@@ -167,5 +178,10 @@ public class PublicationsActivity extends AppCompatActivity
         DialogFragment newFragment = new DeletePublicationDialog(db, publication);
         newFragment.show(getSupportFragmentManager(), "delete");
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
