@@ -46,7 +46,7 @@ _En esta pantalla se puede introducir el nombre del establecimiento y la puntuac
 
 _De vuelta a la pantalla se pintará el nombre del establecimiento seleccionado y la puntuación introducida en los cuadros de texto que previamente estaban vacíos. A continuación se puede añadir un producto o seleccionar una imagen del archivo del móvil._
 
-![Screenshot](snapshots/AddProductDialog.png)
+![Screenshot](snapshots/AddProductFragment.png)
 
 _Al pulsar en añadir producto aparece un cuadro de diálogo con los campos nombre, precio y puntuación. Si se le da a añadir con alguno o todos los campos vacíos saltará un pop up indicando el error. Si se rellenan los campos se registrará el producto y aparecerá en la lista de productos. Cada vez que se registre, modifique o elimine un producto se refresca la lista. También se actualizan los campos puntuación y precio._
 
